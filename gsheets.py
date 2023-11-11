@@ -33,7 +33,7 @@ def google_auth():
         print('valid creds found')
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
-    with open("token.json", "w") as token:
+    with open("secrets/token.json", "w") as token:
         token.write(creds.to_json())
 
 def get_sheet(sheet_id):
