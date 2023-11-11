@@ -9,7 +9,7 @@ from googleapiclient.errors import HttpError
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
-CREDENTIALS = 'client_secret_1071226092782-svh8jcqb6kpti3a7depp496jducuvfo8.apps.googleusercontent.com.json'
+CREDENTIALS = 'secrets/client_secret_1071226092782-svh8jcqb6kpti3a7depp496jducuvfo8.apps.googleusercontent.com.json'
 
 creds = None
 
@@ -18,8 +18,8 @@ def google_auth():
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    if os.path.exists("secrets/token.json"):
+        creds = Credentials.from_authorized_user_file("secrets/token.json", SCOPES)
         print('found token.json', creds.valid)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
