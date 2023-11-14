@@ -12,9 +12,11 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 CREDENTIALS = 'secrets/client_secret_1071226092782-svh8jcqb6kpti3a7depp496jducuvfo8.apps.googleusercontent.com.json'
 
 creds = None
+sheet = None
 
-def google_auth():
-    global creds
+def google_auth(i_sheet_id):
+    global creds, sheet, sheet_id
+    sheet_id = i_sheet_id
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
@@ -35,41 +37,49 @@ def google_auth():
             creds.refresh(Request())
     with open("secrets/token.json", "w") as token:
         token.write(creds.to_json())
-
-def get_sheet(sheet_id):
-  try:
     service = build("sheets", "v4", credentials=creds)
-
-    # Call the Sheets API
-    range_name = 'Questions!B6:B33'    
     sheet = service.spreadsheets()
-    result = (
-        sheet.values()
-        .get(spreadsheetId=sheet_id, range=range_name)
-        .execute()
-    )
-    values = result.get("values", [])
 
-    if not values:
-      print("No data found.")
-      return
+def get_examples():
+    try:
+        # Call the Sheets API
+        range_name = 'Examples!B6:F33'    
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values
 
-    print("Name, Major:")
-    for row in values:
-      print(f"{row[0]}")
-  except HttpError as err:
-    print(err)
- 
+def get_prompts():
+    try:
+        # Call the Sheets API
+        range_name = 'Prompts!B2:B5'    
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values
 
-def update_sheet():
-    service = build("sheets", "v4", credentials=creds)
+def update_sheet(sheet_id):
     range_name = 'Prompts!C3:D3'
     value_input_option = 'USER_ENTERED'
-    update_values = [['a', 'b']]
+    update_values = [['hello', 'there']]
     update_body = {'values': update_values}    
-    range_name = 'Questions!B6:B33'    
-    sheet = service.spreadsheets()
     result = sheet.values().update(
-        spreadsheetId=SPREADSHEET_ID, range=range_name,
+        spreadsheetId=sheet_id, range=range_name,
         valueInputOption=value_input_option, body=update_body).execute()
 
