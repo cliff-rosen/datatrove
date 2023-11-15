@@ -4,6 +4,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import pandas as pd
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -56,6 +57,24 @@ def get_examples():
     except HttpError as err:
         print(err)
     return values
+
+def get_abstracts():
+    try:
+        # Call the Sheets API
+        range_name = 'Examples!B5:H33'   
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    df = pd.DataFrame(values[1:], columns=values[0])
+    return df
 
 def get_prompts():
     try:
