@@ -1,6 +1,8 @@
+import openai_wrappers as model
 import gsheets as gs
 import streamlit as st
 import numpy as np
+import json
 import time
 
 SPREADSHEET_ID = '1cbU59j5_tkoflnlzT78QcBgHZDqC27yCCKsr5zvl8-I'
@@ -40,12 +42,16 @@ def reset():
   print('resetting prompt')
   st.session_state.updated_prompt = cur_prompt
 
+
 def update_score():
     system_instruction = st.session_state.updated_prompt + '\n\n<ABSTRACT>' + records[index][2] + '</ABSTRACT>'
     messages = [
-          {"role": "system", "content": system_instruction},
-          {"role": "user", "content": "Hello!"}
+          {"role": "system", "content": system_instruction}
     ]
+    res = json.loads(model.generate(messages, 0))
+    print(res)
+    st.session_state.p_score = res['score']
+    st.session_state.p_explanation = res['explanation']
 
 # Navigation buttons and index display
 col1, col2, col3 = st.columns([1, 1, 2])
