@@ -30,6 +30,7 @@ cur_prompt = prompts[2][0]
 new_prompt = cur_prompt
 abstracts = st.session_state.abstracts
       
+st.title('DataTrove Training Module')
 
 # Function to display record details
 def show_record(record):
@@ -38,7 +39,7 @@ def show_record(record):
     st.text_area("Abstract:", record[2], height=300)
 
 
-def reset():
+def revert():
   print('resetting prompt')
   st.session_state.updated_prompt = cur_prompt
 
@@ -80,8 +81,10 @@ with col2:
 
 # Update and Redo Buttons
 st.divider()
-up = st.button('update prompt')
-rs = st.button('redo score', on_click=update_score)
+col1, col2, col3 = st.columns(3)
+up = col1.button('revert prompt', on_click=revert)
+rs = col2.button('enhance prompt')
+rs = col3.button('rescore', on_click=update_score)
 
 # Prompts
 col1, col2 = st.columns(2)
@@ -89,4 +92,4 @@ with col1:
   st.text_area('current', cur_prompt, height=800, disabled=True)  
 with col2:  
   updated_prompt = st.text_area('updated', new_prompt, height=800, key='updated_prompt')
-reset = st.button('reset', on_click=reset)
+
