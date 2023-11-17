@@ -1,4 +1,26 @@
 
+TO DO:
+- implement 'enhance prompt'; store prior prompts to browse or revert
+- feature to rescore all and report on loss
+- where to store and when to update prompts
+- UI disables when waiting for llm
+- store user edited human scores
+
+Article (records[index])
+- PMID
+- Title
+- Abstract
+Human Score
+- Score
+- Explanation
+Machine Score
+- Score
+- Explanation
+Prompts
+- Current
+- Updated
+
+
 Inputs:
 - human provided mandate
 - N number of examples with human scoring

@@ -14,6 +14,7 @@ CREDENTIALS = 'secrets/client_secret_1071226092782-svh8jcqb6kpti3a7depp496jducuv
 
 creds = None
 sheet = None
+sheet_id = None
 
 def google_auth(i_sheet_id):
     global creds, sheet, sheet_id
@@ -44,7 +45,7 @@ def google_auth(i_sheet_id):
 def get_examples():
     try:
         # Call the Sheets API
-        range_name = 'Examples!B6:F33'    
+        range_name = 'Examples!B6:H33'    
         result = (
             sheet.values()
             .get(spreadsheetId=sheet_id, range=range_name)
@@ -93,12 +94,13 @@ def get_prompts():
         print(err)
     return values
 
-def update_sheet(sheet_id):
-    range_name = 'Prompts!C3:D3'
+def update_scores(records):
+    print('updating scores...')
+    range_name = 'Examples!E6:H33'
     value_input_option = 'USER_ENTERED'
-    update_values = [['hello', 'there']]
+    update_values = [rec[3:7] for rec in records]
     update_body = {'values': update_values}    
     result = sheet.values().update(
         spreadsheetId=sheet_id, range=range_name,
         valueInputOption=value_input_option, body=update_body).execute()
-
+    print('result:', result)
