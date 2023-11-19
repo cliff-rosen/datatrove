@@ -72,6 +72,33 @@ def h_explanation_change():
   gs.update_scores(records)
 
 
+def get_prompt_update():
+    
+    p_template = '''
+        Below, you will see a prompt, a scientific abstract, a human_score and a machine_score. The purpose of the prompt is to instruct a language model to score a scientific abstract as if it were a human. If the prompt is perfectly formed, then it should prompt a language model to return the same score for any given abstract. So if you see that the human_score and the machine_score below are very similar then the prompt did a good job for this abstract. But if the human_score and the machine_score are not very close then the prompt should be updated so that the model can do a better job next time.
+
+        Please decide whether or not the prompt should be updated. If not, simply reply NO NEED FOR CHANGE. If so, please suggest specific changes to the prompt so that it better captures the intention of the human scorer.
+    '''
+
+    abstract = records[index][2]
+    human_score = {"score": records[index][3], "explanation": records[index][4]}
+    machine_score = {"score": records[index][5], "explanation": records[index][6]}
+    prompt = cur_prompt
+
+    system_instruction = p_template \
+      + '\n\n<ABSTRACT>' + abstract + '</ABSTRACT>' \
+      + '\n\n<HUMAN_SCORE>' + json.dumps(human_score) + '</HUMAN_SCORE>' \
+      + '\n\n<MACHINE_SCORE>' + json.dumps(machine_score) + '</MACHINE_SCORE>' \
+      + '\n\n<PROMPT>' + prompt + '</PROMPT>'
+    messages = [
+          {"role": "system", "content": system_instruction}
+    ]
+    with st.spinner('Loading data...'):
+      #res = json.loads(model.generate(messages, 0))
+      res = model.generate(messages, 0)
+    st.session_state.rec = res
+
+
 def prev_item():
   if st.session_state.index > 0:
       st.session_state.index -= 1
@@ -110,11 +137,12 @@ with col2:
 st.divider()
 col1, col2, col3 = st.columns(3)
 up = col1.button('Revert Prompt', on_click=revert)
-rs = col2.button('Enhance Prompt')
+rs = col2.button('Enhance Prompt', on_click=get_prompt_update)
 rs = col3.button('Rescore', on_click=update_score)
 st.divider()
 
 # Prompts
+st.text_area('Prompt Recommendations', 'TBD', key='rec')
 ex = st.expander('Prompts')
 with ex:
   col1, col2 = st.columns(2)
