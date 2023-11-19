@@ -27,6 +27,8 @@ records = st.session_state.records
 index = st.session_state.index
 abstracts = st.session_state.abstracts
 prompts = st.session_state.prompts
+st.session_state.h_score = int(records[index][3])
+st.session_state.h_explanation = records[index][4]
 st.session_state.p_score = int(records[index][5])
 st.session_state.p_explanation = records[index][6]
 cur_prompt = prompts[2][0]
@@ -58,6 +60,18 @@ def update_score():
     gs.update_scores(records)
 
 
+def h_score_change():
+  print('val:', st.session_state.h_score)
+  records[index][3] = st.session_state.h_score
+  gs.update_scores(records)
+
+
+def h_explanation_change():
+  print('h_explanation_change:', st.session_state.h_explanation)
+  records[index][4] = st.session_state.h_explanation
+  gs.update_scores(records)
+
+
 def prev_item():
   if st.session_state.index > 0:
       st.session_state.index -= 1
@@ -86,12 +100,11 @@ st.divider()
 # Scoring section
 col1, col2 = st.columns(2)
 with col1:
-  x = int(records[index][3])
-  h_score = st.slider('Human score', 1, 10, x, disabled=False)
-  h_explanation = st.text_area('Human explanation', records[index][4], disabled=False)
+  st.slider('Human score', 1, 10, key='h_score', on_change=h_score_change, disabled=False)
+  h_explanation = st.text_area('Human explanation', on_change=h_explanation_change, height=300, key='h_explanation', disabled=False)
 with col2:
-  p_score = st.slider('Machine score', 1, 10, key='p_score', disabled=True)
-  p_explanation = st.text_area('Machine explanation', key='p_explanation', disabled=True)
+  st.slider('Machine score', 1, 10, key='p_score', disabled=True)
+  p_explanation = st.text_area('Machine explanation', height=300, key='p_explanation', disabled=True)
 
 # Update and Redo Buttons
 st.divider()
