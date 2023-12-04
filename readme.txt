@@ -1,5 +1,35 @@
 
 TO DO:
+
+implement basic workflow in google sheet
+    articles = getArticles()
+    (scoring_prompt, score_prompt_improvement_prompt) = getPrompts()
+
+    for article_id in len(articles)
+
+        score = getScore(article_id, scoring_prompt)
+        writeScore(article_id, score)
+
+        scoring_prompt = updatePrompt(article_id, scoring_prompt, score_prompt_improvement_prompt, score)
+
+        scores = getScores(article_id, scoring_prompt)
+        writeScores(article_id)
+
+possibly try having a "rules" section of scoring prompt that gets updated instead of updating entire prompt
+
+
+get samples
+get prompts
+model score first article
+record score
+update prompt
+model score first article
+record score
+record prompt
+
+
+------------------------------------------
+
 - implement 'enhance prompt'; store prior prompts to browse or revert
 - feature to rescore all and report on loss
 - where to store and when to update prompts

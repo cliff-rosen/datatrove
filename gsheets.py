@@ -45,7 +45,7 @@ def google_auth(i_sheet_id):
 def get_examples():
     try:
         # Call the Sheets API
-        range_name = 'Examples!B6:H33'    
+        range_name = 'Samples!B6:H33'    
         result = (
             sheet.values()
             .get(spreadsheetId=sheet_id, range=range_name)
@@ -62,7 +62,7 @@ def get_examples():
 def get_abstracts():
     try:
         # Call the Sheets API
-        range_name = 'Examples!B5:H33'   
+        range_name = 'Samples!B5:H33'   
         result = (
             sheet.values()
             .get(spreadsheetId=sheet_id, range=range_name)
@@ -96,7 +96,7 @@ def get_prompts():
 
 def update_scores(records):
     print('updating scores...')
-    range_name = 'Examples!E6:H33'
+    range_name = 'Samples!E6:H33'
     value_input_option = 'USER_ENTERED'
     update_values = [rec[3:7] for rec in records]
     update_body = {'values': update_values}    

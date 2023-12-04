@@ -26,17 +26,22 @@ def fetch_details(id):
         data = f.read() 
         # parse XML response to extract needed fields
         ...
-        
-keyword_list = [
-        'Dry eye disease',
-        'Ulcerative colitis',
-        'Crohn’s disease',
-        'Retinopathy',
-        'Retinal disease'
-        ]       
 
-results = pubmed_search(keyword_list[0])
+def run1():        
+    keyword_list = [
+            'Dry eye disease',
+            'Ulcerative colitis',
+            'Crohn’s disease',
+            'Retinopathy',
+            'Retinal disease'
+            ]       
 
+    results = pubmed_search(keyword_list[0])
+
+
+i = [1,2,3]
+for j in range(len(i)):
+    print(j)
 
 '''
 for result_id in results:

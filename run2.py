@@ -73,9 +73,12 @@ def h_explanation_change():
 
 
 def get_prompt_update():
-    
+    print('updating')
+
     p_template = '''
-        Below, you will see a prompt, a scientific abstract, a human_score and a machine_score. The purpose of the prompt is to instruct a language model to score a scientific abstract as if it were a human. If the prompt is perfectly formed, then it should prompt a language model to return the same score for any given abstract. So if you see that the human_score and the machine_score below are very similar then the prompt did a good job for this abstract. But if the human_score and the machine_score are not very close then the prompt should be updated so that the model can do a better job next time.
+        Below, you will see a prompt, a scientific abstract, a human_score and a machine_score. The purpose of the prompt is to instruct a language model to score a scientific abstract the same way a human would. If the prompt is perfectly formed, then it should prompt a language model to return the same score as the human scorer for any given abstract. So if you see that the human_score and the machine_score below are very similar then the prompt did a good job for this abstract. But if the human_score and the machine_score are not very close then the prompt should be updated so that the model score can come closer to the human score.
+
+        When updating the prompt this way, you want to try and focus on changes that make the model scoring behavior more similar to the human scoring behavior. So, please look for contradictions between the model explanations and the prompt instructions and focus on reducing them. The prompt should be updated to better align the machine's scoring behavior with the human scorer's rationale. 
 
         Please decide whether or not the prompt should be updated. If not, simply reply NO NEED FOR CHANGE. If so, please suggest specific changes to the prompt so that it better captures the intention of the human scorer.
     '''
@@ -94,7 +97,7 @@ def get_prompt_update():
           {"role": "system", "content": system_instruction}
     ]
     with st.spinner('Loading data...'):
-      #res = json.loads(model.generate(messages, 0))
+      # res = json.loads(model.generate(messages, 0))
       res = model.generate(messages, 0)
     st.session_state.rec = res
 
