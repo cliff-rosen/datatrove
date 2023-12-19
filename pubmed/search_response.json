@@ -1,0 +1,97 @@
+{
+    "header": {"type": "esearch", "version": "0.3"
+    },
+    "esearchresult": {"count": "1975", "retmax": "20", "retstart": "0", "idlist": ["38111772", "38111766", "38111509", "38111445", "38111407", "38107694", "38107393", "38106709", "38106479", "38104035", "38103929", "38101398", "38099570", "38098926", "38098329", "38094283", "38094121", "38094114", "38094112", "38093961"
+        ], "translationset": [
+            {"from": "melanocortin", "to": "#melanocortins#[MeSH Terms
+                ] OR #melanocortins#[All Fields
+                ] OR #melanocortin#[All Fields
+                ]"
+            },
+            {"from": "natriuretic", "to": "#natriuretic#[All Fields
+                ] OR #natriuretics#[All Fields
+                ]"
+            },
+            {"from": "Dry eye", "to": "#dry eye syndromes#[MeSH Terms
+                ] OR (#dry#[All Fields
+                ] AND #eye#[All Fields
+                ] AND #syndromes#[All Fields
+                ]) OR #dry eye syndromes#[All Fields
+                ] OR (#dry#[All Fields
+                ] AND #eye#[All Fields
+                ]) OR #dry eye#[All Fields
+                ]"
+            },
+            {"from": "Ulcerative colitis", "to": "#colitis, ulcerative#[MeSH Terms
+                ] OR (#colitis#[All Fields
+                ] AND #ulcerative#[All Fields
+                ]) OR #ulcerative colitis#[All Fields
+                ] OR (#ulcerative#[All Fields
+                ] AND #colitis#[All Fields
+                ])"
+            },
+            {"from": #Crohn"s disease#, "to": "#crohn disease#[MeSH Terms
+                ] OR (#crohn#[All Fields
+                ] AND #disease#[All Fields
+                ]) OR #crohn disease#[All Fields
+                ] OR #crohn s disease#[All Fields
+                ]"
+            },
+            {"from": "Retinopathy", "to": "#retinal diseases#[MeSH Terms
+                ] OR (#retinal#[All Fields
+                ] AND #diseases#[All Fields
+                ]) OR #retinal diseases#[All Fields
+                ] OR #retinopathies#[All Fields
+                ] OR #retinopathy#[All Fields
+                ]"
+            },
+            {"from": "Retinal disease", "to": "#retinal diseases#[MeSH Terms
+                ] OR (#retinal#[All Fields
+                ] AND #diseases#[All Fields
+                ]) OR #retinal diseases#[All Fields
+                ] OR (#retinal#[All Fields
+                ] AND #disease#[All Fields
+                ]) OR #retinal disease#[All Fields
+                ]"
+            }
+        ], "querytranslation": "(#melanocortins#[MeSH Terms
+        ] OR #melanocortins#[All Fields
+        ] OR #melanocortin#[All Fields
+        ] OR (#natriuretic#[All Fields
+        ] OR #natriuretics#[All Fields
+        ]) OR (#dry eye syndromes#[MeSH Terms
+        ] OR (#dry#[All Fields
+        ] AND #eye#[All Fields
+        ] AND #syndromes#[All Fields
+        ]) OR #dry eye syndromes#[All Fields
+        ] OR (#dry#[All Fields
+        ] AND #eye#[All Fields
+        ]) OR #dry eye#[All Fields
+        ]) OR (#colitis, ulcerative#[MeSH Terms
+        ] OR (#colitis#[All Fields
+        ] AND #ulcerative#[All Fields
+        ]) OR #ulcerative colitis#[All Fields
+        ] OR (#ulcerative#[All Fields
+        ] AND #colitis#[All Fields
+        ])) OR (#crohn disease#[MeSH Terms
+        ] OR (#crohn#[All Fields
+        ] AND #disease#[All Fields
+        ]) OR #crohn disease#[All Fields
+        ] OR #crohn s disease#[All Fields
+        ]) OR (#retinal diseases#[MeSH Terms
+        ] OR (#retinal#[All Fields
+        ] AND #diseases#[All Fields
+        ]) OR #retinal diseases#[All Fields
+        ] OR #retinopathies#[All Fields
+        ] OR #retinopathy#[All Fields
+        ]) OR (#retinal diseases#[MeSH Terms
+        ] OR (#retinal#[All Fields
+        ] AND #diseases#[All Fields
+        ]) OR #retinal diseases#[All Fields
+        ] OR (#retinal#[All Fields
+        ] AND #disease#[All Fields
+        ]) OR #retinal disease#[All Fields
+        ])) AND 2023/11/01: 2023/11/30[Date - Publication
+        ]"
+    }
+}

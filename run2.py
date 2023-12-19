@@ -1,4 +1,4 @@
-import openai_wrappers as model
+import openai_wrapper as model
 import gsheets as gs
 import streamlit as st
 import numpy as np

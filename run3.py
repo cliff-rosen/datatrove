@@ -1,4 +1,5 @@
 import local_secrets as secrets
+import pubmed_wrapper as pm
 from openai import AsyncOpenAI
 import asyncio
 
@@ -29,8 +30,14 @@ async def main():
     print('back from task await')
     return results
 
+sd = '2023/11/01'
+ed = '2023/11/30'
 
 print('starting')
-results = asyncio.run(main())
+#results = asyncio.run(main())
+res = pm.get_article_ids_by_date_range(sd, ed)
+print(res['status_code'])
+print(res['count'])
+print(res['ids'][0:10])
 print('back')
-print(results)
+#print(results)
