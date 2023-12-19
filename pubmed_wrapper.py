@@ -1,4 +1,5 @@
 import requests
+import xml.etree.ElementTree as ET
 
 
 PUBMED_API_SEARCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
@@ -11,13 +12,11 @@ def get_article_ids_by_date_range(start_date, end_date):
 
     url = PUBMED_API_SEARCH_URL \
         + '?db=pubmed' \
-        + '&term=' + FILTER_TERM \
-        + '&datetype=pdat' \
-        + '&mindate=' + start_date \
-        + '&maxdate=' + end_date \
+        + '&term=%28' + FILTER_TERM + '%29' + get_date_clause(start_date , end_date)\
         + '&retmax=' + RETMAX \
         + '&retmode=json'
 
+    print(url)
     print('about to retrieve ids')
     response = requests.get(url)
     content = response.json()
@@ -30,6 +29,61 @@ def get_article_ids_by_date_range(start_date, end_date):
 
 
 def get_articles_from_ids(ids):
-    pass
 
-#?db=pubmed&id=37409973&retmode=xml
+    url = PUBMED_API_FETCH_URL \
+        + '?db=pubmed' \
+        + '&id=' + ','.join(ids)
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+    except Exception as e:
+        print("Error: ", e)
+
+    xml = response.text
+    x_print(xml)
+
+    return response
+
+
+def get_date(article):
+    pub_date = article.find(".//PubDate")
+    year = pub_date.find("Year")
+    month = pub_date.find("Month")
+    day = pub_date.find("Day")
+    return year + '/' + month + '/' + day
+
+
+def get_date_clause(start_date, end_date):
+    clause = 'AND (("<sdate>"[Date - Completion] : "<edate>"[Date - Completion]))'
+    clause = clause.replace("<sdate", start_date)
+    clause = clause.replace("<edate>", end_date)
+    return clause
+
+
+def x_print(xml):
+    root = ET.fromstring(xml)
+
+    for article in root.findall(".//PubmedArticle"):
+        pmid = article.find(".//PMID").text
+        title = article.find(".//ArticleTitle").text
+        #date = get_date(article)
+        pub_date = article.find(".//DateCompleted")
+        year = pub_date.find("Year").text
+        month_x = pub_date.find("Month")
+        month = month_x.text if month_x is not None else '?'
+        day_x = pub_date.find("Day")
+        day = day_x.text if day_x is not None else '?'
+        print(f"PMID: {pmid}, Date: {year}/{month}/{day}")
+
+
+    """
+    url = PUBMED_API_SEARCH_URL \
+        + '?db=pubmed' \
+        + '&term=' + FILTER_TERM \
+        + '&datetype=pdat' \
+        + '&mindate=' + start_date \
+        + '&maxdate=' + end_date \
+        + '&retmax=' + RETMAX \
+        + '&retmode=json'
+    """
