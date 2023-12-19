@@ -16,6 +16,7 @@ creds = None
 sheet = None
 sheet_id = None
 
+
 def google_auth(i_sheet_id):
     global creds, sheet, sheet_id
     sheet_id = i_sheet_id
@@ -42,6 +43,7 @@ def google_auth(i_sheet_id):
     service = build("sheets", "v4", credentials=creds)
     sheet = service.spreadsheets()
 
+
 def get_examples():
     try:
         # Call the Sheets API
@@ -58,6 +60,7 @@ def get_examples():
     except HttpError as err:
         print(err)
     return values
+
 
 def get_abstracts():
     try:
@@ -77,6 +80,7 @@ def get_abstracts():
     df = pd.DataFrame(values[1:], columns=values[0])
     return df
 
+
 def get_prompts():
     try:
         # Call the Sheets API
@@ -93,6 +97,7 @@ def get_prompts():
     except HttpError as err:
         print(err)
     return values
+
 
 def update_scores(records):
     print('updating scores...')

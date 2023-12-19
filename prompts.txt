@@ -1,0 +1,69 @@
+Please set feature values for the below abstract according to the following instructions. Each abstract has the following list of feature:
+
+- pathway_rel [yes, no]: Set to yes if the abstract relates to either the melanocortin or natriuretic metabolic pathway, and otherwise set to no
+
+- disease_rel [yes, no]: Set to yes if the abstract relates to either the melanocortin or natriuretic metabolic pathway, and otherwise set to dry eye, ulcerative colitis, crohn's disease, retinopathy or retinal disease, and otherwise set to no
+
+- is_systematic [yes, no]: Set to yes if the abstract relates to a systematic review or a meta study and otherwise set to no
+
+- study_type [animal, human RCT, human non-RCT, in vitro, other, not a study]: set to whichever allowed value best matches the study described in the abstract
+
+- study_outcome [effectiveness, safety, bio marker]: return a list of any allowed value that applies to the outcomes targeted in the abstract
+
+Return your answer in the following JSON format:
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "pathway_rel": {
+      "type": "string",
+      "description": "Set to 'yes' if the abstract relates to either the melanocortin or natriuretic metabolic pathway, otherwise set to 'no'.",
+      "enum": ["yes", "no"]
+    },
+    "disease_rel": {
+      "type": "string",
+      "description": "Set to 'yes' if the abstract relates to dry eye, ulcerative colitis, Crohn's disease, retinopathy or retinal disease, otherwise set to 'no'.",
+      "enum": ["yes", "no"]
+    },
+    "relevant_pathways": {
+      "type": "array",
+      "description": "List of relevant metabolic pathways if the abstract is related.",
+      "items": {
+        "type": "string",
+        "enum": ["melanocortin", "natriuretic"]
+      }
+    },
+    "relevant_diseases": {
+      "type": "array",
+      "description": "List of relevant diseases if the abstract is related.",
+      "items": {
+        "type": "string",
+        "enum": ["dry eye", "ulcerative colitis", "crohn's disease", "retinopathy", "retinal disease"]
+      }
+    }
+    "is_systematic": {
+      "type": "string",
+      "description": "Set to 'yes' if the abstract is a systematic review or a meta-study, otherwise set to 'no'.",
+      "enum": ["yes", "no"]
+    },
+    "study_type": {
+      "type": "string",
+      "description": "Set to the type of study described in the abstract. Choose from 'animal', 'human RCT', 'human non-RCT', 'in vitro', 'other', or 'not a study'.",
+      "enum": ["animal", "human RCT", "human non-RCT", "in vitro", "other", "not a study"]
+    },
+    "study_outcome": {
+      "type": "array",
+      "description": "List any outcomes targeted in the abstract. Allowed values are 'effectiveness', 'safety', and 'bio marker'.",
+      "items": {
+        "type": "string",
+        "enum": ["effectiveness", "safety", "bio marker"]
+      }
+    }
+  },
+  "required": ["pathway_rel", "disease_rel", "is_systematic", "study_type", "study_outcome"]
+}
+
+<ABSTRACT>
+
+</ABSTRACT>

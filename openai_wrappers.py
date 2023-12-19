@@ -12,6 +12,7 @@ MAX_TOKENS = 400
 
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
 
+
 def generate(messages, temperature):
 
     response =''
@@ -29,6 +30,27 @@ def generate(messages, temperature):
         response = "We're sorry, the server was too busy to handle this response.  Please try again."
 
     return response
+
+
+async def agenerate(messages, temperature=0):
+    print('agenerate start')
+    response =''
+
+    try:
+        completion = await client.chat.completions.create(
+            model=COMPLETION_MODEL,
+            messages=messages,
+            max_tokens=MAX_TOKENS,
+            temperature=temperature
+            )
+        response = completion.choices[0].message.content
+    except Exception as e:
+        print('query_model error: ', str(e))
+        response = "We're sorry, the server was too busy to handle this response.  Please try again."
+
+    print('agenerate done')
+    return response
+
 
 def get_embedding(text):
     res = client.embeddings.create(
