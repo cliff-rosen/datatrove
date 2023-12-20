@@ -35,6 +35,8 @@ def load_articles_from_date_range(sd, ed):
 
 
 def get_messages(article, prompt):
+    if len(article) == 3: # missing abstract
+        article.append('')
     content = article[2] + '\n\n' + article[3]
     sys_msg = prompt + '\n\n<ABSTRACT>' + content + '</ABSTRACT>'
     messages =  [
@@ -46,22 +48,30 @@ def get_messages(article, prompt):
 def get_features_from_json(feature_json):
     obj = json.loads(feature_json)
 
-    """
-    x = {
-        "pathway_rel": obj.pathway_rel, 
-        "disease_rel": obj.disease_rel,
-        "is_systematic": obj.is_systematic,
-        "study_type": obj.study_type,
-        "study_outcome": obj.study_outcome,
-        "relevant_pathways": obj.relevant_pathways,
-        "relevant_diseases": obj.relevant_diseases
-    }
-    """
+    print('---------------------------')
+    print(obj)
+    if 'relevant_pathways' in obj:
+        obj['relevant_pathways'] = ", ".join(obj['relevant_pathways'])
+    else:
+        obj['relevant_pathways'] = ""
+    if 'relevant_diseases' in obj:
+        obj['relevant_diseases'] = ", ".join(obj['relevant_diseases'])
+    else:
+        obj['relevant_diseases'] = ""
+    if 'study_outcome' in obj:
+        obj['study_outcome'] = ", ".join(obj['study_outcome'])
+    else:
+        obj['study_outcome'] = ""
 
-    obj['relevant_pathways'] = ", ".join(obj['relevant_pathways'])
-    obj['relevant_diseases'] = ", ".join(obj['relevant_diseases'])
-    obj['study_outcome'] = ", ".join(obj['study_outcome'])
-    return list(obj.values())
+    return [
+        obj["pathway_rel"], 
+        obj["disease_rel"],
+        obj["is_systematic"],
+        obj["study_type"],
+        obj["study_outcome"],
+        obj["relevant_pathways"],
+        obj["relevant_diseases"]
+    ]
 
 
 async def update_features():
@@ -70,7 +80,7 @@ async def update_features():
 
     # get prompt and articles from sheet
     prompt = gs.get_prompt()
-    articles = gs.get_articles()[0:2]
+    articles = gs.get_articles()
 
     # run articles through model
     tasks = [asyncio.create_task(model.agenerate(get_messages(articles[i], prompt), 0, 'json')) for i in range(len(articles))]
@@ -83,7 +93,7 @@ async def update_features():
     # update sheet with results
     articles = [list(pair[0] + pair[1]) for pair in zip(articles, features_arr)]
     print(articles)
-    gs.upload_articles(articles)
+    gs.upload_articles_with_features(articles)
 
 
 start_date = '2023/11/01'
