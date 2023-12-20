@@ -1,4 +1,5 @@
 import local_secrets as secrets
+from openai import AsyncOpenAI
 import openai
 #from openai.embeddings_utils import get_embedding as openai_get_embedding
 
@@ -11,7 +12,7 @@ EMBEDDING_MODEL = "text-embedding-ada-002"
 MAX_TOKENS = 400
 
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
-
+aclient = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 def generate(messages, temperature):
 
@@ -32,15 +33,21 @@ def generate(messages, temperature):
     return response
 
 
-async def agenerate(messages, temperature=0):
+async def agenerate(messages, temperature=0, response_format='text'):
     print('agenerate start')
     response =''
 
+    if response_format == 'text':
+        rf = { "type": "text" }
+    else:
+         rf = { "type": "json_object" }
+
     try:
-        completion = await client.chat.completions.create(
+        completion = await aclient.chat.completions.create(
             model=COMPLETION_MODEL,
             messages=messages,
             max_tokens=MAX_TOKENS,
+            response_format=rf,
             temperature=temperature
             )
         response = completion.choices[0].message.content

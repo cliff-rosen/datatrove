@@ -99,6 +99,24 @@ def get_prompts():
     return values
 
 
+def get_prompt():
+    try:
+        # Call the Sheets API
+        range_name = 'Prompts!B4:B4'    
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [""])
+        if not values:
+            print("No data found.")
+            return ""
+    except HttpError as err:
+        print(err)
+    return values[0][0]
+
+
 def update_scores(records):
     print('updating scores...')
     range_name = 'Samples!E6:H33'
@@ -111,7 +129,7 @@ def update_scores(records):
     print('result:', result)
 
 
-def add_articles(articles):
+def upload_articles(articles):
     print("Adding articles, count = ", len(articles))
     sheet_name = 'Articles'
     range_to_write = f"{sheet_name}!A2"
@@ -132,3 +150,45 @@ def add_articles(articles):
     response = request.execute()
     print(response)
     return response
+
+
+def get_articles():
+    try:
+        # Call the Sheets API
+        range_name = 'Articles!A2:D1533'
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values
+
+
+def upload_articles_with_features(articles):
+    print("Adding articles, count = ", len(articles))
+    sheet_name = 'Results'
+    range_to_write = f"{sheet_name}!A6"
+
+    # Define the value range body
+    body = {
+        'values': articles,
+        'majorDimension': 'ROWS'
+    }
+
+    # Call the Sheets API
+    request = sheet.values().update(
+        spreadsheetId=sheet_id, 
+        range=range_to_write, 
+        valueInputOption='USER_ENTERED', 
+        body=body
+    )
+    response = request.execute()
+    print(response)
+    return response
+
