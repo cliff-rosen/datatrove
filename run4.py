@@ -1,9 +1,5 @@
 
 
-a = [[1,2]]
-b = [["x", "y"]]
-
-
-combined = [list(pair[0] + pair[1]) for pair in zip(a, b)]
-print(combined)
-
+arr = [1,2,3,4,5]
+[a,b,c,d,e] = arr
+print(b)
