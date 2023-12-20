@@ -8,7 +8,7 @@ import openai_wrapper as model
 import json
 import asyncio
 import xml.etree.ElementTree as ET
-
+import time
 
 OPENAI_API_KEY = secrets.OPENAI_API_KEY
 COMPLETION_MODEL = 'gpt-4-1106-preview'
@@ -86,23 +86,51 @@ def get_features_from_json(feature_json):
 async def update_features():
     print('starting')
     gs.google_auth(SPREADSHEET_ID)
+    features = []
 
     # get prompt and articles from sheet
     prompt = gs.get_prompt()
     articles = gs.get_articles()
 
     # run articles through model
-    tasks = [asyncio.create_task(model.agenerate(get_messages(articles[i], prompt), 0, 'json')) for i in range(len(articles))]
-    print('about to await tasks...')
-    features = await asyncio.gather(*tasks)
-    features_arr = [get_features_from_json(features[i]) for i in range(len(features))]
-    print(features_arr)
-    print("back from running tasks")
+    batch_size = 200
+    low = 0
+    high = min(len(articles), low + batch_size)
+    while low < len(articles):
+        print(f"Running batch from {low} to {high}")
+        tasks = [asyncio.create_task(model.agenerate(get_messages(articles[i], prompt), 0, 'json')) 
+        for i in range(low, high)]
+        print(' about to await tasks...')
+        results = await asyncio.gather(*tasks)                 
+        features_list = [get_features_from_json(results[i]) for i in range(0, len(results))]
+        features = features + features_list
+        print(features_list)
+        low += batch_size
+        high = min(len(articles), low + batch_size)
+        print(" back from running tasks")
+        time.sleep(10)
 
     # update sheet with results
-    articles = [list(pair[0] + pair[1]) for pair in zip(articles, features_arr)]
+    articles = [list(pair[0] + pair[1]) for pair in zip(articles, features)]
     print(articles)
     gs.upload_articles_with_features(articles)
+
+
+def update_scores():
+    scores = []
+    gs.google_auth(SPREADSHEET_ID)
+
+    print("restrieving articles")
+    articles = gs.get_article_features()
+
+    print("calculating scores")
+    for article in articles:
+        score = get_score_from_features(article)
+        scores.append([score])
+
+    print("updating scores")
+    gs.upload_article_scores(scores)
+
 
 
 async def test():
@@ -121,44 +149,16 @@ async def test():
     print("back from running tasks")
 
 
-async def update_features_slow():
-    print('starting')
-    gs.google_auth(SPREADSHEET_ID)
-
-    # get prompt and articles from sheet
-    prompt = gs.get_prompt()
-    articles = gs.get_articles()
-    #articles = articles[0:2]
-
-    # run articles through model
-    features = []
-    for i in range(len(articles)):
-        print('processing articles ', i)
-        features_json = model.generate(get_messages(articles[i], prompt), 0, 'json')
-        features_arr = get_features_from_json(features_json)
-        print(features_arr)
-        features.append(features_arr)
-
-    # update sheet with results
-    articles = [list(pair[0] + pair[1]) for pair in zip(articles, features)]
-    print(articles)
-    gs.upload_articles_with_features(articles)
-
-
 
 start_date = '2023/11/01'
 end_date = '2023/11/30'
 messages = [{"role": "system", "content": "hello"}]
 
-#asyncio.run(test())
+#load_articles_from_date_range(start_date, end_date)
 #asyncio.run(update_features())
-asyncio.run(update_features_slow())
-
-# results = asyncio.run(main())
-# print(results)
+update_scores()
 
 
-# load_articles_from_date_range(start_date, end_date)
-
+#asyncio.run(test())
 # print(pm.get_articles_from_ids(['38004229']))
 

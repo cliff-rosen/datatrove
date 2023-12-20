@@ -2,11 +2,19 @@
 
 def get_score_from_features(feature):
 
+    min_len = 5
+    while len(feature) < min_len:
+        feature.append("")
+
     [poi_relevance, doi_relevance, is_systematic, study_type, study_outcomes] = feature
+
+    poi_relevance = poi_relevance.upper()
+    doi_relevance = doi_relevance.upper()
+    is_systematic = is_systematic.upper()
 
     # Check if PoI and DoI are both 'YES'
     if poi_relevance == "YES" and doi_relevance == "YES":
-        if "efficacy" in study_outcomes:
+        if "effectiveness" in study_outcomes:
             if study_type == "human RCT":
                 return 10
             else:
@@ -25,7 +33,7 @@ def get_score_from_features(feature):
 
     # Check if PoI is 'NO' and DoI is 'YES'
     elif poi_relevance == "NO" and doi_relevance == "YES":
-        if "efficacy" in study_outcomes or "safety" in study_outcomes:
+        if "effectiveness" in study_outcomes or "safety" in study_outcomes:
             if study_type in ["human RCT", "human non-RCT"]:
                 if is_systematic == "YES":
                     return 5
@@ -43,7 +51,7 @@ def get_score_from_features(feature):
 
     # Check if PoI is 'YES' and DoI is 'No'
     elif poi_relevance == "YES" and doi_relevance == "NO":
-        if ("efficacy" in study_outcomes or "safety" in study_outcomes):
+        if ("effectiveness" in study_outcomes or "safety" in study_outcomes):
             if study_type == "human RCT":
                 return 7
             if is_systematic == "YES":
@@ -93,6 +101,6 @@ def test():
     for i in range(len(features)):
         print(get_score_from_features(features[i]), scores[i])
 
-test()
+#test()
 #print(feature)
 #print(get_score_from_features(feature))

@@ -169,6 +169,23 @@ def get_articles():
         print(err)
     return values
 
+def get_article_features():
+    try:
+        # Call the Sheets API
+        range_name = 'Results!E6:I1537'
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values
+
 
 def upload_articles_with_features(articles):
     print("Adding articles, count = ", len(articles))
@@ -178,6 +195,29 @@ def upload_articles_with_features(articles):
     # Define the value range body
     body = {
         'values': articles,
+        'majorDimension': 'ROWS'
+    }
+
+    # Call the Sheets API
+    request = sheet.values().update(
+        spreadsheetId=sheet_id, 
+        range=range_to_write, 
+        valueInputOption='USER_ENTERED', 
+        body=body
+    )
+    response = request.execute()
+    print(response)
+    return response
+
+
+def upload_article_scores(scores):
+    print("Adding scores, count = ", len(scores))
+    sheet_name = 'Results'
+    range_to_write = f"{sheet_name}!L6"
+
+    # Define the value range body
+    body = {
+        'values': scores,
         'majorDimension': 'ROWS'
     }
 
