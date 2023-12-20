@@ -109,3 +109,26 @@ def update_scores(records):
         spreadsheetId=sheet_id, range=range_name,
         valueInputOption=value_input_option, body=update_body).execute()
     print('result:', result)
+
+
+def add_articles(articles):
+    print("Adding articles, count = ", len(articles))
+    sheet_name = 'Articles'
+    range_to_write = f"{sheet_name}!A2"
+
+    # Define the value range body
+    body = {
+        'values': articles,
+        'majorDimension': 'ROWS'
+    }
+
+    # Call the Sheets API
+    request = sheet.values().update(
+        spreadsheetId=sheet_id, 
+        range=range_to_write, 
+        valueInputOption='USER_ENTERED', 
+        body=body
+    )
+    response = request.execute()
+    print(response)
+    return response
