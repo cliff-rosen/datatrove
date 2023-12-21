@@ -19,28 +19,7 @@ SPREADSHEET_ID = '1Wc8U2cVyTli-tssILDLKd7I15XGb2j5gKXx9CJ_QkWw'
 logging.info('Starting')
 
 
-def load_articles_from_date_range(sd, ed):
-
-    print('starting')
-
-    # get article ids
-    res = pm.get_article_ids_by_date_range(sd, ed)
-    ids = res['ids']
-    print(res['status_code'])
-    print(res['count'])
-    print(res['ids'][0:10])
-
-    # get articles from ids
-    articles = pm.get_articles_from_ids(ids)
-
-    # write articles to sheet
-    gs.google_auth(SPREADSHEET_ID)
-    gs.upload_articles(articles)
-
-    print('back')
-
-
-def get_messages(article, prompt):
+def _get_messages(article, prompt):
     if len(article) == 3: # missing abstract
         article.append('')
     content = article[2] + '\n\n' + article[3]
@@ -51,7 +30,7 @@ def get_messages(article, prompt):
     return messages
 
 
-def get_features_from_json(feature_json):
+def _get_features_from_json(feature_json):
     if feature_json == "" or feature_json == 'ERROR':
         print ('get_features_from_json called with bad value')
         return ["ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR"]
@@ -83,6 +62,27 @@ def get_features_from_json(feature_json):
     ]
 
 
+def load_articles_from_date_range(sd, ed):
+
+    print('starting')
+
+    # get article ids
+    res = pm.get_article_ids_by_date_range(sd, ed)
+    ids = res['ids']
+    print(res['status_code'])
+    print(res['count'])
+    print(res['ids'][0:10])
+
+    # get articles from ids
+    articles = pm.get_articles_from_ids(ids)
+
+    # write articles to sheet
+    gs.google_auth(SPREADSHEET_ID)
+    gs.upload_articles(articles)
+
+    print('back')
+
+
 async def update_features():
     print('starting')
     gs.google_auth(SPREADSHEET_ID)
@@ -98,11 +98,13 @@ async def update_features():
     high = min(len(articles), low + batch_size)
     while low < len(articles):
         print(f"Running batch from {low} to {high}")
-        tasks = [asyncio.create_task(model.agenerate(get_messages(articles[i], prompt), 0, 'json')) 
-        for i in range(low, high)]
+        tasks = [
+            asyncio.create_task(model.agenerate(_get_messages(articles[i], prompt), 0, 'json')) 
+            for i in range(low, high)
+        ]
         print(' about to await tasks...')
         results = await asyncio.gather(*tasks)                 
-        features_list = [get_features_from_json(results[i]) for i in range(0, len(results))]
+        features_list = [_get_features_from_json(results[i]) for i in range(0, len(results))]
         features = features + features_list
         print(features_list)
         low += batch_size
@@ -132,7 +134,6 @@ def update_scores():
     gs.upload_article_scores(scores)
 
 
-
 async def test():
     gs.google_auth(SPREADSHEET_ID)
 
@@ -149,15 +150,19 @@ async def test():
     print("back from running tasks")
 
 
-
 start_date = '2023/11/01'
 end_date = '2023/11/30'
 messages = [{"role": "system", "content": "hello"}]
 
-#load_articles_from_date_range(start_date, end_date)
-#asyncio.run(update_features())
-update_scores()
 
+# STEP 1: load articles from date range from PubMed to Articles
+load_articles_from_date_range(start_date, end_date)
+
+# STEP 2: extract features from articles and write to Results
+#asyncio.run(update_features())
+
+# STEP 3: update Results scores from features 
+#update_scores()
 
 #asyncio.run(test())
 # print(pm.get_articles_from_ids(['38004229']))

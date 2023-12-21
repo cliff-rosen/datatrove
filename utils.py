@@ -1,12 +1,12 @@
 
 
-def get_score_from_features(feature):
+def get_score_from_features(features):
 
     min_len = 5
-    while len(feature) < min_len:
-        feature.append("")
+    while len(features) < min_len:
+        features.append("")
 
-    [poi_relevance, doi_relevance, is_systematic, study_type, study_outcomes] = feature
+    [poi_relevance, doi_relevance, is_systematic, study_type, study_outcomes] = features
 
     poi_relevance = poi_relevance.upper()
     doi_relevance = doi_relevance.upper()
@@ -69,7 +69,7 @@ def get_score_from_features(feature):
     return 0
 
 # poi_relevance, doi_relevance, is_systematic, study_type, study_outcomes
-features = [
+features_list = [
     ["YES", "YES", "YES", "human RCT", ["efficacy"]],  # Score 10
     ["YES", "YES", "YES", "non-human RCT", ["efficacy"]],  # Score 9
     ["YES", "YES", "YES", "any study type", ["safety"]],  # Score 8
@@ -98,8 +98,8 @@ features = [
 scores = [10,9,8,7,6,3,2, 5,4,3,4,3,2, 7,6,5,4,3,2, 0]
 
 def test():
-    for i in range(len(features)):
-        print(get_score_from_features(features[i]), scores[i])
+    for i in range(len(features_list)):
+        print(get_score_from_features(features_list[i]), scores[i])
 
 #test()
 #print(feature)
