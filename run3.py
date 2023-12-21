@@ -13,8 +13,8 @@ import time
 OPENAI_API_KEY = secrets.OPENAI_API_KEY
 COMPLETION_MODEL = 'gpt-4-1106-preview'
 #SPREADSHEET_ID = '1cbU59j5_tkoflnlzT78QcBgHZDqC27yCCKsr5zvl8-I'
-SPREADSHEET_ID = '1Wc8U2cVyTli-tssILDLKd7I15XGb2j5gKXx9CJ_QkWw'
-
+#SPREADSHEET_ID = '1Wc8U2cVyTli-tssILDLKd7I15XGb2j5gKXx9CJ_QkWw'
+SPREADSHEET_ID = '1my0yZpRRm5VJi5Zx-62saht4sSIa43zc--UMJnr0Inc'
 
 logging.info('Starting')
 
@@ -38,18 +38,30 @@ def _get_features_from_json(feature_json):
 
     print('---------------------------')
     print(obj)
+
     if 'relevant_pathways' in obj:
         obj['relevant_pathways'] = ", ".join(obj['relevant_pathways'])
     else:
         obj['relevant_pathways'] = ""
+
     if 'relevant_diseases' in obj:
         obj['relevant_diseases'] = ", ".join(obj['relevant_diseases'])
     else:
         obj['relevant_diseases'] = ""
+
     if 'study_outcome' in obj:
         obj['study_outcome'] = ", ".join(obj['study_outcome'])
     else:
         obj['study_outcome'] = ""
+
+    if 'pathway_rel' not in obj:
+        obj["pathway_rel"]="ERROR"
+    if 'disease_rel' not in obj:
+        obj["disease_rel"]="ERROR"
+    if 'is_systematic' not in obj:
+        obj["is_systematic"]="ERROR"
+    if 'study_type' not in obj:
+        obj["study_type"]="ERROR"
 
     return [
         obj["pathway_rel"], 
@@ -142,24 +154,22 @@ async def test():
     articles = gs.get_articles()[0:1]
 
     # run articles through model
-    tasks = [asyncio.create_task(model.agenerate(get_messages(articles[i], prompt), 0, 'json')) for i in range(len(articles))]
+    tasks = [asyncio.create_task(model.agenerate(_get_messages(articles[i], prompt), 0, 'json')) for i in range(len(articles))]
     print('about to await tasks...')
     features = await asyncio.gather(*tasks)
-    features_arr = [get_features_from_json(features[i]) for i in range(len(features))]
+    features_arr = [_get_features_from_json(features[i]) for i in range(len(features))]
     print(features_arr)
     print("back from running tasks")
 
 
-start_date = '2023/11/01'
-end_date = '2023/11/30'
-messages = [{"role": "system", "content": "hello"}]
-
+start_date = '2023/10/01'
+end_date = '2023/10/31'
 
 # STEP 1: load articles from date range from PubMed to Articles
-load_articles_from_date_range(start_date, end_date)
+#load_articles_from_date_range(start_date, end_date)
 
 # STEP 2: extract features from articles and write to Results
-#asyncio.run(update_features())
+asyncio.run(update_features())
 
 # STEP 3: update Results scores from features 
 #update_scores()

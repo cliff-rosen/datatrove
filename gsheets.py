@@ -44,61 +44,6 @@ def google_auth(i_sheet_id):
     sheet = service.spreadsheets()
 
 
-def get_examples():
-    try:
-        # Call the Sheets API
-        range_name = 'Samples!B6:H33'    
-        result = (
-            sheet.values()
-            .get(spreadsheetId=sheet_id, range=range_name)
-            .execute()
-        )
-        values = result.get("values", [])
-        if not values:
-            print("No data found.")
-            return []
-    except HttpError as err:
-        print(err)
-    return values
-
-
-def get_abstracts():
-    try:
-        # Call the Sheets API
-        range_name = 'Samples!B5:H33'   
-        result = (
-            sheet.values()
-            .get(spreadsheetId=sheet_id, range=range_name)
-            .execute()
-        )
-        values = result.get("values", [])
-        if not values:
-            print("No data found.")
-            return []
-    except HttpError as err:
-        print(err)
-    df = pd.DataFrame(values[1:], columns=values[0])
-    return df
-
-
-def get_prompts():
-    try:
-        # Call the Sheets API
-        range_name = 'Prompts!B2:B5'    
-        result = (
-            sheet.values()
-            .get(spreadsheetId=sheet_id, range=range_name)
-            .execute()
-        )
-        values = result.get("values", [])
-        if not values:
-            print("No data found.")
-            return []
-    except HttpError as err:
-        print(err)
-    return values
-
-
 def get_prompt():
     try:
         # Call the Sheets API
@@ -155,24 +100,7 @@ def upload_articles(articles):
 def get_articles():
     try:
         # Call the Sheets API
-        range_name = 'Articles!A2:D1533'
-        result = (
-            sheet.values()
-            .get(spreadsheetId=sheet_id, range=range_name)
-            .execute()
-        )
-        values = result.get("values", [])
-        if not values:
-            print("No data found.")
-            return []
-    except HttpError as err:
-        print(err)
-    return values
-
-def get_article_features():
-    try:
-        # Call the Sheets API
-        range_name = 'Results!E6:I1537'
+        range_name = 'Articles!A2:D900'
         result = (
             sheet.values()
             .get(spreadsheetId=sheet_id, range=range_name)
@@ -210,6 +138,24 @@ def upload_articles_with_features(articles):
     return response
 
 
+def get_article_features():
+    try:
+        # Call the Sheets API
+        range_name = 'Results!E6:I904'
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values
+
+
 def upload_article_scores(scores):
     print("Adding scores, count = ", len(scores))
     sheet_name = 'Results'
@@ -232,3 +178,60 @@ def upload_article_scores(scores):
     print(response)
     return response
 
+
+############### OLD ############
+
+
+def get_examples():
+    try:
+        # Call the Sheets API
+        range_name = 'Samples!B6:H33'    
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values
+
+
+def get_abstracts():
+    try:
+        # Call the Sheets API
+        range_name = 'Samples!B5:H33'   
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    df = pd.DataFrame(values[1:], columns=values[0])
+    return df
+
+
+def get_prompts():
+    try:
+        # Call the Sheets API
+        range_name = 'Prompts!B2:B5'    
+        result = (
+            sheet.values()
+            .get(spreadsheetId=sheet_id, range=range_name)
+            .execute()
+        )
+        values = result.get("values", [])
+        if not values:
+            print("No data found.")
+            return []
+    except HttpError as err:
+        print(err)
+    return values

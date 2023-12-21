@@ -60,12 +60,10 @@ def get_article_ids_by_date_range(start_date, end_date):
 
 
 def get_articles_from_ids(ids):
-
     articles = []
-
     batch_size = 100
     low = 0
-    high = low + 100 - 1
+    high = low + 100
 
     while low < len(ids):
         print(f"processing {low} to {high}")
