@@ -169,10 +169,10 @@ end_date = '2023/10/31'
 #load_articles_from_date_range(start_date, end_date)
 
 # STEP 2: extract features from articles and write to Results
-asyncio.run(update_features())
+#asyncio.run(update_features())
 
 # STEP 3: update Results scores from features 
-#update_scores()
+update_scores()
 
 #asyncio.run(test())
 # print(pm.get_articles_from_ids(['38004229']))
