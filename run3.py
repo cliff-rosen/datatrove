@@ -15,6 +15,8 @@ COMPLETION_MODEL = 'gpt-4-1106-preview'
 #SPREADSHEET_ID = '1cbU59j5_tkoflnlzT78QcBgHZDqC27yCCKsr5zvl8-I'
 #SPREADSHEET_ID = '1Wc8U2cVyTli-tssILDLKd7I15XGb2j5gKXx9CJ_QkWw'
 SPREADSHEET_ID = '1my0yZpRRm5VJi5Zx-62saht4sSIa43zc--UMJnr0Inc'
+FILTER_TERM = "(melanocortin) OR (natriuretic) OR (Dry eye) OR (Ulcerative colitis) OR (Crohn’s disease) OR (Retinopathy) OR (Retinal disease)"
+
 
 logging.info('Starting')
 
@@ -75,11 +77,10 @@ def _get_features_from_json(feature_json):
 
 
 def load_articles_from_date_range(sd, ed):
-
     print('starting')
 
     # get article ids
-    res = pm.get_article_ids_by_date_range(sd, ed)
+    res = pm.get_article_ids_by_date_range(FILTER_TERM, sd, ed)
     ids = res['ids']
     print(res['status_code'])
     print(res['count'])
@@ -162,18 +163,11 @@ async def test():
     print("back from running tasks")
 
 
-start_date = '2023/11/08'
-end_date = '2023/11/08'
+start_date = '2023/11/01'
+end_date = '2023/11/30'
 
-res = pm.get_article_ids_by_date_range(start_date, end_date)
-ids = res['ids']
-print(res['status_code'])
+res = pm.get_article_ids_by_date_range(FILTER_TERM, start_date, end_date)
 print(res['count'])
-print(res['ids'][0:10])
-
-articles = pm.get_articles_from_ids(ids)
-for article in articles:
-    print(article[0])
 
 # STEP 1: load articles from date range from PubMed to Articles
 #load_articles_from_date_range(start_date, end_date)

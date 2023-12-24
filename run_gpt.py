@@ -4,8 +4,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.utilities import SerpAPIWrapper
 import os
 
-OPENAI_API_KEY = "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"
-SERPAPI_API_KEY = "21d2bedee78fcacc3bbd2f2cf5150253d03629740d47473c5ecd71e20a85a322"
+OPENAI_API_KEY = ""
+SERPAPI_API_KEY = ""
 SOURCE_DIRECTORY = 'C:\code\langchain\libs\langchain\_sources'
 
 print('starting')

@@ -14,8 +14,6 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=38004229&
 """
 PUBMED_API_SEARCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
 PUBMED_API_FETCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
-xFILTER_TERM = "%28melanocortin%29%20OR%20%28natriuretic%29%20OR%20%28Dry%20eye%29%20OR%20%28Ulcerative%20colitis%29%20OR%20%28Crohn%E2%80%99s%20disease%29%20OR%20%28Retinopathy%29%20OR%20%28Retinal%20disease%29"
-FILTER_TERM = "(melanocortin) OR (natriuretic) OR (Dry eye) OR (Ulcerative colitis) OR (Crohn’s disease) OR (Retinopathy) OR (Retinal disease)"
 RETMAX = "10000"
 
 
@@ -50,11 +48,11 @@ def _get_article_from_xml(article):
     return [pmid, comp_date, title, abstract]
 
 
-def get_article_ids_by_date_range(start_date, end_date):
+def get_article_ids_by_date_range(filter_term, start_date, end_date):
     url = PUBMED_API_SEARCH_URL
     params = {
         'db': 'pubmed',
-        'term': '(' + FILTER_TERM + ')' + _get_date_clause(start_date, end_date),
+        'term': '(' + filter_term + ')' + _get_date_clause(start_date, end_date),
         'retmax': RETMAX,
         'retmode': 'json'
     }
