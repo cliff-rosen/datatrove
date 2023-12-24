@@ -14,7 +14,8 @@ https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=38004229&
 """
 PUBMED_API_SEARCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
 PUBMED_API_FETCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
-FILTER_TERM = "%28melanocortin%29%20OR%20%28natriuretic%29%20OR%20%28Dry%20eye%29%20OR%20%28Ulcerative%20colitis%29%20OR%20%28Crohn%E2%80%99s%20disease%29%20OR%20%28Retinopathy%29%20OR%20%28Retinal%20disease%29"
+xFILTER_TERM = "%28melanocortin%29%20OR%20%28natriuretic%29%20OR%20%28Dry%20eye%29%20OR%20%28Ulcerative%20colitis%29%20OR%20%28Crohn%E2%80%99s%20disease%29%20OR%20%28Retinopathy%29%20OR%20%28Retinal%20disease%29"
+FILTER_TERM = "(melanocortin) OR (natriuretic) OR (Dry eye) OR (Ulcerative colitis) OR (Crohn’s disease) OR (Retinopathy) OR (Retinal disease)"
 RETMAX = "10000"
 
 
@@ -22,7 +23,7 @@ def _get_date_clause(start_date, end_date):
     clause = 'AND (("<sdate>"[Date - Completion] : "<edate>"[Date - Completion]))'
     clause = clause.replace("<sdate", start_date)
     clause = clause.replace("<edate>", end_date)
-    return urllib.parse.quote(clause)
+    return clause
 
 
 def _get_date(article):
@@ -50,15 +51,16 @@ def _get_article_from_xml(article):
 
 
 def get_article_ids_by_date_range(start_date, end_date):
-    url = PUBMED_API_SEARCH_URL \
-        + '?db=pubmed' \
-        + '&term=%28' + FILTER_TERM + '%29' + _get_date_clause(start_date , end_date)\
-        + '&retmax=' + RETMAX \
-        + '&retmode=json'
-
+    url = PUBMED_API_SEARCH_URL
+    params = {
+        'db': 'pubmed',
+        'term': '(' + FILTER_TERM + ')' + _get_date_clause(start_date, end_date),
+        'retmax': RETMAX,
+        'retmode': 'json'
+    }
     print(url)
     print('about to retrieve ids')
-    response = requests.get(url)
+    response = requests.get(url, params)
     content = response.json()
     count = content['esearchresult']['count']
     ids = content['esearchresult']['idlist']
@@ -77,10 +79,14 @@ def get_articles_from_ids(ids):
     while low < len(ids):
         print(f"processing {low} to {high}")
         id_batch = ids[low: high]
-        url = PUBMED_API_FETCH_URL + '?db=pubmed' + '&id=' + ','.join(id_batch)
+        url = PUBMED_API_FETCH_URL
+        params = {
+            'db': 'pubmed',
+            'id': ','.join(id_batch)
+        }
         xml = ""
         try:
-            response = requests.get(url)
+            response = requests.get(url, params)
             response.raise_for_status()
             xml = response.text
         except Exception as e:

@@ -162,8 +162,18 @@ async def test():
     print("back from running tasks")
 
 
-start_date = '2023/10/01'
-end_date = '2023/10/31'
+start_date = '2023/11/08'
+end_date = '2023/11/08'
+
+res = pm.get_article_ids_by_date_range(start_date, end_date)
+ids = res['ids']
+print(res['status_code'])
+print(res['count'])
+print(res['ids'][0:10])
+
+articles = pm.get_articles_from_ids(ids)
+for article in articles:
+    print(article[0])
 
 # STEP 1: load articles from date range from PubMed to Articles
 #load_articles_from_date_range(start_date, end_date)
@@ -172,7 +182,7 @@ end_date = '2023/10/31'
 #asyncio.run(update_features())
 
 # STEP 3: update Results scores from features 
-update_scores()
+#update_scores()
 
 #asyncio.run(test())
 # print(pm.get_articles_from_ids(['38004229']))
