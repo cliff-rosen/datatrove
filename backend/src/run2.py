@@ -1,5 +1,5 @@
-import openai_wrapper as model
-import gsheets as gs
+import backend.src.common.openai_wrapper as model
+import backend.src.common.gsheets as gs
 import streamlit as st
 import numpy as np
 import json

@@ -2,9 +2,9 @@ import logging
 logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 from utils import get_score_from_features
 import local_secrets as secrets
-import pubmed_wrapper as pm
-import gsheets as gs
-import openai_wrapper as model
+import common.pubmed_wrapper as pm
+import common.gsheets as gs
+import common.openai_wrapper as model
 import json
 import asyncio
 import xml.etree.ElementTree as ET
@@ -166,8 +166,9 @@ async def test():
 start_date = '2023/11/01'
 end_date = '2023/11/30'
 
-res = pm.get_article_ids_by_date_range(FILTER_TERM, start_date, end_date)
-print(res['count'])
+#res = pm.get_article_ids_by_date_range(FILTER_TERM, start_date, end_date)
+messages =  [{"role": "system", "content": 'hello'}]
+print(model.generate(messages))
 
 # STEP 1: load articles from date range from PubMed to Articles
 #load_articles_from_date_range(start_date, end_date)
