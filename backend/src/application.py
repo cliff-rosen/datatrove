@@ -23,7 +23,9 @@ class Hello(Resource):
 
 class Search(Resource):
     def get(self):
-        return search.get_articles(1, 2)
+        return {"result": "OK",
+                "articles": search.get_articles(1, 2)
+        }
 
 
 api = Api(application)

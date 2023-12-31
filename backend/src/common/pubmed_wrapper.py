@@ -16,6 +16,56 @@ PUBMED_API_SEARCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.f
 PUBMED_API_FETCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
 RETMAX = "10000"
 
+class Article():
+
+    @classmethod
+    def from_xml(self, article_xml):
+        article = ET.fromstring(article_xml)
+        PMID = article.find(".//PMID").text
+        title = article.find(".//ArticleTitle").text
+        journal = article.find(".//Journal/Title").text
+        year = article.find(".//Journal/JournalIssue/PubDate/Year").text
+        volume = article.find(".//Journal/JournalIssue/PubDate/Volume").text
+        issue = article.find(".//Journal/JournalIssue/PubDate/Issue").text
+        pages = article.find("MedlinePgn").text
+        authors_list = article.find(".//AuthorList")
+        authors = ', '.join([f"{a.find('.//LastName').text} {a.find('.//ForeName').text}." for a in authors_list])
+
+        citation = f"{authors} {title} {journal}. {year};{volume}({issue}):{pages}."
+
+        print('=================================================================')
+        print(authors)
+        print('--------------------')
+        print(citation)
+        print('--------------------')
+
+        return Article(PMID=PMID, title=title)
+
+    def __init__(self, **kwargs):
+        self.PMID = kwargs['PMID']
+        self.title = kwargs['title']
+
+    def __str__(self):
+        return(f"{self.PMID}: {self.title[0:50]}")
+
+
+def _get_article_from_xml(article):
+
+    pmid = article.find(".//PMID").text
+    print('pmid: ', pmid)
+
+    title = article.find(".//ArticleTitle").text
+
+    abstract_texts = article.findall('.//Abstract/AbstractText')
+    abstract = ""
+    for abstract_text in abstract_texts:
+        abstract += ''.join(abstract_text.itertext())
+
+    comp_date = _get_date(article)
+
+
+    return [pmid, comp_date, title, abstract]
+
 
 def _get_date_clause(start_date, end_date):
     clause = 'AND (("<sdate>"[Date - Completion] : "<edate>"[Date - Completion]))'
@@ -33,19 +83,6 @@ def _get_date(article):
     day = day_x.text if day_x is not None else '?'
     comp_date = f"{year}-{month}-{day}"
     return comp_date
-
-
-def _get_article_from_xml(article):
-    pmid = article.find(".//PMID").text
-    print('pmid: ', pmid)
-    title = article.find(".//ArticleTitle").text
-    abstract_texts = article.findall('.//Abstract/AbstractText')
-    abstract = ""
-    for abstract_text in abstract_texts:
-        abstract += ''.join(abstract_text.itertext())
-    comp_date = _get_date(article)
-
-    return [pmid, comp_date, title, abstract]
 
 
 def get_article_ids_by_date_range(filter_term, start_date, end_date):
@@ -91,13 +128,32 @@ def get_articles_from_ids(ids):
             print("Error: ", e)
 
         root = ET.fromstring(xml)
-        for article in root.findall(".//PubmedArticle"):
-            articles.append(_get_article_from_xml(article))
+        for article_node in root.findall(".//PubmedArticle"):
+            articles.append(Article.from_xml(ET.tostring(article_node)))
 
         low += batch_size
         high += batch_size
 
     return articles
+
+
+def get_citation_from_article(article):
+    pmid = article.find(".//PMID").text
+    print('pmid: ', pmid)
+    title = article.find(".//ArticleTitle").text
+    journal = article.find(".//Journal/Title").text
+    year = article.find(".//Journal/JournalIssue/PubDate/Year").text
+    volume = "x" # article.find(".//Journal/JournalIssue/PubDate/Volume").text
+    issue = "x" # article.find(".//Journal/JournalIssue/PubDate/Issue").text
+    pages = "x" # article.find("MedlinePgn").text
+    authors_list = article.find(".//AuthorList")
+    authors = ', '.join([f"{a['LastName']} {a['ForeName'][0]}." for a in authors_list])
+    print('------------------------')
+    print(authors_list)
+    print('------------------------')
+    citation = f"{authors} {title}. {journal}. {year};{volume}({issue}):{pages}."
+
+    return citation
 
 
 

@@ -38,7 +38,7 @@ async function doFetch(method, endpoint, body, isFileUpload) {
   //const headers = getHeaders();
   const options = {
     method,
-    //headers,
+    //  ,
   };
 
   if (body) {

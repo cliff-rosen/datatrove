@@ -1,50 +1,24 @@
 import urllib.request 
-from xml.etree import ElementTree
+from xml.etree import ElementTree as ET
+import common.pubmed_wrapper as pm
+from common.pubmed_wrapper import Article
 
-def pubmed_search(keyword):
-    ids = []
-    base_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
-    params = {'db':'pubmed',
-              'term':keyword,
-              'retmode':'xml'}
-    url = base_url + '?' + urllib.parse.urlencode(params)
-    with urllib.request.urlopen(url) as f:
-        root = ElementTree.fromstring(f.read())
+articles = pm.get_articles_from_ids(['22486366', '35858505', '38007612'])
+for article in articles:
+    print(article)
+
+#citation = pm.get_citation_from_article(article)
+#print(citation)
+
+"""
+
+get_articles_from_ids(ids)
+    xml_res = get_articles(ids)
+    articles = get_articles_as_element_list(xml_res)
+    for article_node in articles:
+        article = get_article_from_article_node(article_node)
+
         
-    for id_tag in root.iter('Id'):
-        ids.append(id_tag.text)
-        
-    return ids
-
-def fetch_details(id):
-    base_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
-    params = {'db':'pubmed',
-              'id':id,
-              'retmode':'xml'}
-    url = base_url + '?' + urllib.parse.urlencode(params)  
-    with urllib.request.urlopen(url) as f:
-        data = f.read() 
-        # parse XML response to extract needed fields
-        ...
-
-def run1():        
-    keyword_list = [
-            'Dry eye disease',
-            'Ulcerative colitis',
-            'Crohn’s disease',
-            'Retinopathy',
-            'Retinal disease'
-            ]       
-
-    results = pubmed_search(keyword_list[0])
-
-
-i = [1,2,3]
-for j in range(len(i)):
-    print(j)
-
-'''
-for result_id in results:
-    details = fetch_details(result_id)
-    print(details)
-'''
+raw xml -> xml node - > dict, array
+    
+"""
