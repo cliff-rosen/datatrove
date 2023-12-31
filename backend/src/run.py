@@ -3,8 +3,12 @@ from xml.etree import ElementTree as ET
 import common.pubmed_wrapper as pm
 from common.pubmed_wrapper import Article
 
-articles = pm.get_articles_from_ids(['22486366', '35858505', '38007612'])
+ids = ['22486366', '35858505', '38007612']
+#ids = ['22486366']
+
+articles = pm.get_articles_from_ids(ids)
 for article in articles:
+    print('==============================')
     print(article)
 
 #citation = pm.get_citation_from_article(article)

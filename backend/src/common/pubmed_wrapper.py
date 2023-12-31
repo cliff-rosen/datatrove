@@ -17,38 +17,101 @@ PUBMED_API_FETCH_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcg
 RETMAX = "10000"
 
 class Article():
+    """
+    PubmedArticle
+        MedlineCitation
+            PMID
+            Article (PubModel)
+                Journal
+                    JournalIssue (CitedMedium)
+                        Volume
+                        Issue
+                        PubDate
+                    Title
+                ArticleTitle
+                Pagination
+                Abstract
+                AuthorList
+
+    """
 
     @classmethod
     def from_xml(self, article_xml):
-        article = ET.fromstring(article_xml)
-        PMID = article.find(".//PMID").text
-        title = article.find(".//ArticleTitle").text
-        journal = article.find(".//Journal/Title").text
-        year = article.find(".//Journal/JournalIssue/PubDate/Year").text
-        volume = article.find(".//Journal/JournalIssue/PubDate/Volume").text
-        issue = article.find(".//Journal/JournalIssue/PubDate/Issue").text
-        pages = article.find("MedlinePgn").text
-        authors_list = article.find(".//AuthorList")
-        authors = ', '.join([f"{a.find('.//LastName').text} {a.find('.//ForeName').text}." for a in authors_list])
+        pubmed_article_node = ET.fromstring(article_xml)
+        medline_citation_node = pubmed_article_node.find('.//MedlineCitation')
+
+        PMID_node = medline_citation_node.find(".//PMID")
+        article_node = medline_citation_node.find('.//Article')
+        journal_node = article_node.find('.//Journal')
+
+        journal_issue_node = journal_node.find(".//JournalIssue")
+        journal_title_node = journal_node.find(".//Title")
+        volume_node = journal_issue_node.find(".//Volume")
+        issue_node = journal_issue_node.find(".//Issue")
+        pubdate_node = journal_issue_node.find(".//PubDate")
+        year_node = pubdate_node.find(".//Year")
+
+        article_title_node = article_node.find(".//ArticleTitle")
+        pagination_node = article_node.find('.//Pagination')
+        abstract_node = article_node.find(".//Abstract")
+        author_list_node = article_node.find('.//AuthorList')
+
+        PMID = PMID_node.text
+        title = article_title_node.text
+        journal = journal_title_node.text
+        medium = journal_issue_node.attrib['CitedMedium']
+        year = year_node.text
+        if volume_node is not None:
+            volume = volume_node.text
+        else:
+            volume - ""
+
+        issue = "i" # article.find(".//Journal/JournalIssue/PubDate/Issue").text
+        pages = "p" # article.find("MedlinePgn").text
+
+        authors = ', '.join([f"{a.find('.//LastName').text} {a.find('.//ForeName').text}." for a in author_list_node])
+
+        abstract_texts = abstract_node.findall('.//AbstractText')
+        abstract = ""
+        for abstract_text in abstract_texts:
+            abstract += ''.join(abstract_text.itertext())
 
         citation = f"{authors} {title} {journal}. {year};{volume}({issue}):{pages}."
 
-        print('=================================================================')
-        print(authors)
-        print('--------------------')
-        print(citation)
-        print('--------------------')
-
-        return Article(PMID=PMID, title=title)
+        return Article(
+                    PMID=PMID,
+                    title=title,
+                    abstract=abstract,
+                    authors=authors,
+                    journal=journal,
+                    medium=medium,
+                    year=year,
+                    volume=volume
+                    )
 
     def __init__(self, **kwargs):
+        print(kwargs)
         self.PMID = kwargs['PMID']
         self.title = kwargs['title']
+        self.abstract = kwargs['abstract']
+        self.authors = kwargs['authors']
+        self.journal = kwargs['journal']
+        self.year = kwargs['year']
+        self.volume = kwargs['volume']
+        self.medium = kwargs['medium']
 
     def __str__(self):
-        return(f"{self.PMID}: {self.title[0:50]}")
-
-
+        res = "PMID: " + self.PMID + '\n' \
+            + "Title: " + self.title[0:80] + '\n' \
+            + "Abstract: " + self.abstract[0:80] + '\n' \
+            + "Authors: " + self.authors[0:80] + '\n' \
+            + 'Journal: ' + self.journal[0:80] + '\n' \
+            + 'Year: ' + self.year + '\n' \
+            + 'Volume: ' + self.volume + '\n' \
+            + 'Medium: ' + self.medium
+        
+        return res
+    
 def _get_article_from_xml(article):
 
     pmid = article.find(".//PMID").text
