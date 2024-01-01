@@ -42,8 +42,8 @@ class Article():
 
         PMID_node = medline_citation_node.find(".//PMID")
         article_node = medline_citation_node.find('.//Article')
-        journal_node = article_node.find('.//Journal')
 
+        journal_node = article_node.find('.//Journal')
         journal_issue_node = journal_node.find(".//JournalIssue")
         journal_title_node = journal_node.find(".//Title")
         volume_node = journal_issue_node.find(".//Volume")
@@ -51,10 +51,10 @@ class Article():
         pubdate_node = journal_issue_node.find(".//PubDate")
         year_node = pubdate_node.find(".//Year")
 
-        article_title_node = article_node.find(".//ArticleTitle")
-        pagination_node = article_node.find('.//Pagination')
-        abstract_node = article_node.find(".//Abstract")
-        author_list_node = article_node.find('.//AuthorList')
+        article_title_node = medline_citation_node.find(".//ArticleTitle")
+        pagination_node = medline_citation_node.find('.//Pagination/MedlinePgn')
+        abstract_node = medline_citation_node.find(".//Abstract")
+        author_list_node = medline_citation_node.find('.//AuthorList')
 
         PMID = PMID_node.text
         title = article_title_node.text
@@ -65,9 +65,14 @@ class Article():
             volume = volume_node.text
         else:
             volume - ""
-
-        issue = "i" # article.find(".//Journal/JournalIssue/PubDate/Issue").text
-        pages = "p" # article.find("MedlinePgn").text
+        if issue_node is not None:
+            issue = issue_node.text
+        else:
+            issue = ""
+        if pagination_node is not None:
+            pages = pagination_node.text
+        else:
+            pages = ""           
 
         authors = ', '.join([f"{a.find('.//LastName').text} {a.find('.//ForeName').text}." for a in author_list_node])
 
@@ -86,7 +91,9 @@ class Article():
                     journal=journal,
                     medium=medium,
                     year=year,
-                    volume=volume
+                    volume=volume,
+                    issue=issue,
+                    pages=pages
                     )
 
     def __init__(self, **kwargs):
@@ -98,6 +105,7 @@ class Article():
         self.journal = kwargs['journal']
         self.year = kwargs['year']
         self.volume = kwargs['volume']
+        self.issue = kwargs['issue']
         self.medium = kwargs['medium']
 
     def __str__(self):
@@ -108,6 +116,7 @@ class Article():
             + 'Journal: ' + self.journal[0:80] + '\n' \
             + 'Year: ' + self.year + '\n' \
             + 'Volume: ' + self.volume + '\n' \
+            + 'Issue: ' + self.issue + '\n' \
             + 'Medium: ' + self.medium
         
         return res

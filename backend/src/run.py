@@ -2,7 +2,9 @@ import urllib.request
 from xml.etree import ElementTree as ET
 import common.pubmed_wrapper as pm
 from common.pubmed_wrapper import Article
+from common import db
 
+"""
 ids = ['22486366', '35858505', '38007612']
 #ids = ['22486366']
 
@@ -13,6 +15,8 @@ for article in articles:
 
 #citation = pm.get_citation_from_article(article)
 #print(citation)
+"""
+
 
 """
 
@@ -26,3 +30,33 @@ get_articles_from_ids(ids)
 raw xml -> xml node - > dict, array
     
 """
+
+pmid = '56789'
+title = "Exploring the Depths of Neural Networks"
+abstract = "This study delves into the intricate architectures and learning mechanisms of deep neural networks."
+date_pub = "2023-06-15"
+year = "2023"
+authors = "Jane Doe, John Smith, Alex Johnson"
+journal = "Journal of Artificial Intelligence Research"
+volume = "29"
+issue = "4"
+medium = "Digital"
+pages = "101-150"
+
+poi = "yes"
+doi = "no"
+is_systematic = "Yes"
+study_type = "Randomized Controlled Trial"
+study_outcome = "Increased efficiency in neural network training"
+poi_list = "XYZ123, ABC456, LMN789"
+doi_list = "10.1000/j.ai.2023.06.001, 10.1000/j.ai.2023.06.002, 10.1000/j.ai.2023.06.003"
+score = 85
+
+#res = db.update_articles_main(pmid, title, abstract, date_pub, year, 
+#                     authors, journal, volume, issue, medium, pages)
+#res = db.update_articles_features(pmid, poi, doi, is_systematic, 
+                             #study_type, study_outcome, poi_list, doi_list, score)
+res = db.insert_articles(pmid, title, abstract, date_pub, year, 
+                     authors, journal, volume, issue, medium, pages)
+
+print(res)

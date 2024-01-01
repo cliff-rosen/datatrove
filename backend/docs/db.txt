@@ -1,0 +1,28 @@
+
+CREATE TABLE `articles` (
+	`article_id` INT(11) NOT NULL AUTO_INCREMENT,
+	`pmid` CHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`title` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`abstract` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`date_pub` DATE NULL DEFAULT NULL,
+	`year` CHAR(4) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`authors` CHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`journal` TINYTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`volume` CHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`issue` CHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`medium` CHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`pages` CHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`poi` VARCHAR(3) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`doi` VARCHAR(3) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`is_systematic` VARCHAR(3) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`study_type` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`study_outcome` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`poi_list` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`doi_list` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`score` INT(11) NULL DEFAULT NULL,
+	INDEX `Index 1` (`article_id`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1536
+;
