@@ -1,6 +1,7 @@
 import logging
 logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 import local_secrets as secrets
+from common import db
 from common.utils import get_score_from_features
 import common.pubmed_wrapper as pm
 import common.gsheets as gs
@@ -166,8 +167,32 @@ async def test():
 start_date = '2023/11/01'
 end_date = '2023/11/30'
 
+res = pm.get_article_ids_by_date_range(FILTER_TERM, start_date, end_date)
+ids = res['ids']
+print(res['status_code'])
+print(res['count'])
+print(res['ids'][0:10])
 
-# STEP 1: load articles from date range from PubMed to Articles
+#ids = ['37851564']
+articles = pm.get_articles_from_ids(ids[0:10])
+for article in articles[0:2]:
+    print('------------------------------------')
+    print(article)
+    pmid = article.PMID
+    title = article.title
+    abstract = article.abstract
+    comp_date = article.comp_date
+    year = article.year
+    authors = article.authors
+    journal = article.journal
+    volume = article.volume
+    issue = article.issue
+    medium = article.medium
+    pages = article.pages
+    db.update_articles_main(pmid, title, abstract, comp_date, year, 
+                         authors, journal, volume, issue, medium, pages)
+
+# STEP 1: load articles in date range from PubMed to Articles
 #load_articles_from_date_range(start_date, end_date)
 
 # STEP 2: extract features from articles and write to Results

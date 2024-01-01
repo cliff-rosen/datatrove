@@ -31,7 +31,9 @@ raw xml -> xml node - > dict, array
     
 """
 
-pmid = '56789'
+article = 38017411
+
+pmid = '56789a'
 title = "Exploring the Depths of Neural Networks"
 abstract = "This study delves into the intricate architectures and learning mechanisms of deep neural networks."
 date_pub = "2023-06-15"
@@ -56,7 +58,6 @@ score = 85
 #                     authors, journal, volume, issue, medium, pages)
 #res = db.update_articles_features(pmid, poi, doi, is_systematic, 
                              #study_type, study_outcome, poi_list, doi_list, score)
-res = db.insert_articles(pmid, title, abstract, date_pub, year, 
-                     authors, journal, volume, issue, medium, pages)
-
-print(res)
+#res = db.insert_articles(pmid, title, abstract, date_pub, year, 
+#                     authors, journal, volume, issue, medium, pages)
+#print(res)

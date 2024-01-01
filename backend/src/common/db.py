@@ -47,7 +47,7 @@ def get_articles(PoI, DoI):
 #def update_articles(pmid, title, abstract, date_pub, year, authors, journal, volume, issue, medium, pages, poi, doi, is_systematic, study_type, study_outcome, poi_list, doi_list, score):
 
 
-def insert_articles(pmid, title, abstract, date_pub, year,
+def insert_articles(pmid, title, abstract, comp_date, year,
                    authors, journal, volume, issue, medium, pages):
     try:
         conn = get_connection()
@@ -57,7 +57,7 @@ def insert_articles(pmid, title, abstract, date_pub, year,
                 INSERT INTO articles (pmid, title, abstract, date_pub, year, authors, journal, volume, issue, medium, pages)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
-            record = (pmid, title, abstract, date_pub, year, authors, journal, volume, issue, medium, pages)
+            record = (pmid, title, abstract, comp_date, year, authors, journal, volume, issue, medium, pages)
             res = cursor.execute(query, record)
             conn.commit()
     except Exception as e:
@@ -69,7 +69,7 @@ def insert_articles(pmid, title, abstract, date_pub, year,
 
 
 
-def update_articles_main(pmid, title, abstract, date_pub, year, 
+def update_articles_main(pmid, title, abstract, comp_date, year, 
                          authors, journal, volume, issue, medium, pages):
     try:
         conn = get_connection()
@@ -81,7 +81,7 @@ def update_articles_main(pmid, title, abstract, date_pub, year,
                     journal = %s, volume = %s, issue = %s, medium = %s, pages = %s
                 WHERE pmid = %s
                 """    
-            record = (title, abstract, date_pub, year, authors, journal, volume, issue, medium, pages, pmid)
+            record = (title, abstract, comp_date, year, authors, journal, volume, issue, medium, pages, pmid)
             res = cursor.execute(query, record)
             conn.commit()
     except Exception as e:

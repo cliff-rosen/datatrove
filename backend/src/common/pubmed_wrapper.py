@@ -42,6 +42,7 @@ class Article():
 
         PMID_node = medline_citation_node.find(".//PMID")
         article_node = medline_citation_node.find('.//Article')
+        date_completed_node = medline_citation_node.find(".//DateCompleted")
 
         journal_node = article_node.find('.//Journal')
         journal_issue_node = journal_node.find(".//JournalIssue")
@@ -56,35 +57,68 @@ class Article():
         abstract_node = medline_citation_node.find(".//Abstract")
         author_list_node = medline_citation_node.find('.//AuthorList')
 
-        PMID = PMID_node.text
-        title = article_title_node.text
-        journal = journal_title_node.text
-        medium = journal_issue_node.attrib['CitedMedium']
-        year = year_node.text
+        PMID = ""
+        title = ""
+        journal = ""
+        medium = ""
+        year = ""
+        month = ""
+        day = ""
+        volume = ""
+        issue = ""
+        pages = ""           
+        date_completed = ""
+
+        if PMID_node is not None:
+            PMID = PMID_node.text
+        print(PMID)
+        if article_title_node is not None:
+            title = article_title_node.text
+        if journal_title_node is not None:
+            journal = journal_title_node.text
+        if journal_issue_node is not None:
+            medium = journal_issue_node.attrib['CitedMedium']
+        if year_node is not None:
+            year = year_node.text
         if volume_node is not None:
             volume = volume_node.text
-        else:
-            volume - ""
         if issue_node is not None:
             issue = issue_node.text
-        else:
-            issue = ""
         if pagination_node is not None:
             pages = pagination_node.text
-        else:
-            pages = ""           
+        date_completed = self._get_date_from_node(date_completed_node)
 
-        authors = ', '.join([f"{a.find('.//LastName').text} {a.find('.//ForeName').text}." for a in author_list_node])
+        MAX_AUTHOR_COUNT = 3
+        author_list = []
+        author_node_list = []
+        if author_list_node is not None:
+            author_node_list = author_list_node.findall('.//Author')
+        for author_node in author_node_list[0:3]:
+            last_name_node = author_node.find('.//LastName')
+            if  last_name_node is not None:
+                last_name = last_name_node.text
+                initials_node = author_node.find('.//Initials')
+                if initials_node is not None:
+                    initials = initials_node.text
+                else:
+                    initials = ""
+                author_list.append(f"{last_name} {initials}")
+        authors = ', '.join(author_list)
+        if len(author_node_list) > MAX_AUTHOR_COUNT:
+            authors += ', et al'
 
-        abstract_texts = abstract_node.findall('.//AbstractText')
         abstract = ""
-        for abstract_text in abstract_texts:
-            abstract += ''.join(abstract_text.itertext())
+        if abstract_node is not None:
+            abstract_texts = abstract_node.findall('.//AbstractText')
+            if abstract_texts is not None and len(abstract_texts) > 0:
+                for abstract_text in abstract_texts:
+                    abstract += ''.join(abstract_text.itertext())
 
         citation = f"{authors} {title} {journal}. {year};{volume}({issue}):{pages}."
 
         return Article(
                     PMID=PMID,
+                    comp_date=date_completed,
                     title=title,
                     abstract=abstract,
                     authors=authors,
@@ -97,8 +131,9 @@ class Article():
                     )
 
     def __init__(self, **kwargs):
-        print(kwargs)
+        #print(kwargs)
         self.PMID = kwargs['PMID']
+        self.comp_date = kwargs['comp_date']
         self.title = kwargs['title']
         self.abstract = kwargs['abstract']
         self.authors = kwargs['authors']
@@ -106,10 +141,12 @@ class Article():
         self.year = kwargs['year']
         self.volume = kwargs['volume']
         self.issue = kwargs['issue']
+        self.pages = kwargs['pages']
         self.medium = kwargs['medium']
 
     def __str__(self):
         res = "PMID: " + self.PMID + '\n' \
+            + "Comp date: " + self.comp_date + '\n' \
             + "Title: " + self.title[0:80] + '\n' \
             + "Abstract: " + self.abstract[0:80] + '\n' \
             + "Authors: " + self.authors[0:80] + '\n' \
@@ -120,7 +157,25 @@ class Article():
             + 'Medium: ' + self.medium
         
         return res
-    
+
+    def _get_date_from_node(date_completed_node):
+        if date_completed_node is None:
+            return ""
+        year_node = date_completed_node.find(".//Year")
+        month_node = date_completed_node.find(".//Month")
+        day_node = date_completed_node.find(".//Day")
+        year = year_node.text
+        if month_node is not None:
+            month = month_node.text
+        else:
+            month = "01"
+        if day_node is not None:
+            day = day_node.text
+        else:
+            day = "01"
+        return year + "-" + month + "-" + day
+
+
 def _get_article_from_xml(article):
 
     pmid = article.find(".//PMID").text

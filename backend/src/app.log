@@ -10,3 +10,107 @@
 2023-12-29 04:44:04,410 - INFO - openai_wrapper loaded
 2023-12-29 04:44:04,710 - INFO - Starting
 2023-12-29 04:44:07,005 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 09:33:47,028 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:33:47,028 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:33:49,909 - INFO - openai_wrapper loaded
+2024-01-01 09:33:50,212 - INFO - Starting
+2024-01-01 09:35:00,334 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:35:00,334 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:35:00,662 - INFO - openai_wrapper loaded
+2024-01-01 09:35:00,964 - INFO - Starting
+2024-01-01 09:45:20,786 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:45:20,786 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:45:21,110 - INFO - openai_wrapper loaded
+2024-01-01 09:45:21,409 - INFO - Starting
+2024-01-01 09:49:53,707 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:49:53,707 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:49:54,025 - INFO - openai_wrapper loaded
+2024-01-01 09:49:54,335 - INFO - Starting
+2024-01-01 09:55:37,952 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:55:37,952 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:55:38,283 - INFO - openai_wrapper loaded
+2024-01-01 09:55:38,592 - INFO - Starting
+2024-01-01 09:56:27,025 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:56:27,025 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:56:27,372 - INFO - openai_wrapper loaded
+2024-01-01 09:56:27,682 - INFO - Starting
+2024-01-01 09:59:51,282 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 09:59:51,282 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 09:59:51,644 - INFO - openai_wrapper loaded
+2024-01-01 09:59:51,936 - INFO - Starting
+2024-01-01 10:00:45,833 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:00:45,833 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:00:46,193 - INFO - openai_wrapper loaded
+2024-01-01 10:00:46,502 - INFO - Starting
+2024-01-01 10:01:38,059 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:01:38,059 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:01:38,436 - INFO - openai_wrapper loaded
+2024-01-01 10:01:38,726 - INFO - Starting
+2024-01-01 10:02:16,412 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:02:16,412 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:02:16,782 - INFO - openai_wrapper loaded
+2024-01-01 10:02:17,087 - INFO - Starting
+2024-01-01 10:03:29,472 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:03:29,472 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:03:29,822 - INFO - openai_wrapper loaded
+2024-01-01 10:03:30,135 - INFO - Starting
+2024-01-01 10:04:19,076 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:04:19,076 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:04:19,463 - INFO - openai_wrapper loaded
+2024-01-01 10:04:19,793 - INFO - Starting
+2024-01-01 10:05:46,700 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:05:46,700 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:05:47,015 - INFO - openai_wrapper loaded
+2024-01-01 10:05:47,316 - INFO - Starting
+2024-01-01 10:08:24,712 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:08:24,712 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:08:25,032 - INFO - openai_wrapper loaded
+2024-01-01 10:08:25,332 - INFO - Starting
+2024-01-01 10:10:14,619 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:10:14,619 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:10:14,957 - INFO - openai_wrapper loaded
+2024-01-01 10:10:15,266 - INFO - Starting
+2024-01-01 10:10:33,976 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:10:33,976 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:10:34,283 - INFO - openai_wrapper loaded
+2024-01-01 10:10:34,588 - INFO - Starting
+2024-01-01 10:11:53,502 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:11:53,502 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:11:53,851 - INFO - openai_wrapper loaded
+2024-01-01 10:11:54,162 - INFO - Starting
+2024-01-01 10:15:49,725 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:15:49,725 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:15:50,043 - INFO - openai_wrapper loaded
+2024-01-01 10:15:50,343 - INFO - Starting
+2024-01-01 10:16:06,112 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:16:06,112 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:16:06,472 - INFO - openai_wrapper loaded
+2024-01-01 10:16:06,773 - INFO - Starting
+2024-01-01 10:17:52,432 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:17:52,432 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:17:52,813 - INFO - openai_wrapper loaded
+2024-01-01 10:17:53,133 - INFO - Starting
+2024-01-01 10:18:07,052 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:18:07,052 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:18:07,442 - INFO - openai_wrapper loaded
+2024-01-01 10:18:07,752 - INFO - Starting
+2024-01-01 10:23:55,722 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:23:55,722 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:23:56,072 - INFO - openai_wrapper loaded
+2024-01-01 10:23:56,362 - INFO - Starting
+2024-01-01 10:24:16,632 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:24:16,632 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:24:16,995 - INFO - openai_wrapper loaded
+2024-01-01 10:24:17,292 - INFO - Starting
+2024-01-01 10:50:11,799 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:50:11,799 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:50:12,122 - INFO - openai_wrapper loaded
+2024-01-01 10:50:12,437 - INFO - Starting
+2024-01-01 10:51:33,116 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:51:33,116 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:51:33,472 - INFO - openai_wrapper loaded
+2024-01-01 10:51:33,772 - INFO - Starting
+2024-01-01 10:52:16,098 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 10:52:16,098 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 10:52:16,411 - INFO - openai_wrapper loaded
+2024-01-01 10:52:16,701 - INFO - Starting
