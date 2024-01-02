@@ -78,6 +78,7 @@ async def _do_generate_features(article, prompt):
     title = article['title']
     abstract = article['abstract']
     content = prompt + '<ABSTRACT>' + title + '\n' + abstract + '</ABSTRACT>'
+    print(content)
     res = await model.agenerate(_get_messages(content), 0, 'json')
     return _get_features_from_json(pmid, res)
 
@@ -182,24 +183,22 @@ async def generate_summaries():
 
 
 async def test():
+    pmid = '37868182'
+    article = pm.get_articles_from_ids([pmid])[0]
     gs.google_auth(SPREADSHEET_ID)
-
-    # get prompt and articles from sheet
     prompt = gs.get_prompt()
-    articles = gs.get_articles()[0:1]
-
-    # run articles through model
-    tasks = [asyncio.create_task(model.agenerate(_get_messages(articles[i], prompt), 0, 'json')) for i in range(len(articles))]
+    article_dict = {'pmid': article.PMID, 'title': article.title, 'abstract': article.abstract}
+    tasks = [asyncio.create_task(_do_generate_features(article_dict, prompt))]
     print('about to await tasks...')
-    features = await asyncio.gather(*tasks)
-    features_arr = [_get_features_from_json(features[i]) for i in range(len(features))]
-    print(features_arr)
+    res = await asyncio.gather(*tasks)
+    print(res)
     print("back from running tasks")
 
 
 BATCH = 1
 start_date = '2023/11/01'
 end_date = '2023/11/30'
+asyncio.run(test())
 
 # STEP 1: load articles in date range from PubMed to articles table
 #load_articles_from_date_range(start_date, end_date)
@@ -208,7 +207,7 @@ end_date = '2023/11/30'
 #asyncio.run(update_features())
 
 # STEP 3: update Results scores from features 
-update_scores()
+#update_scores()
 
 # STEP x: generate and store summary
 #asyncio.run(generate_summaries())
