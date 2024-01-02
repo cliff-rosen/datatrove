@@ -7,8 +7,9 @@ const { RangePicker } = DatePicker;
 
 export default function ({ applyFilter }) {
     const [form] = Form.useForm();
-    const defaultStartDate = '2023-11-01'
-    const defaultEndDate = '2023-11-30'
+    const dateFormat = 'YYYY/MM/DD';
+    const defaultStartDate = moment('2023/11/01', dateFormat)
+    const defaultEndDate = moment('2023/11/30', dateFormat)
 
     const formContainerStyle = {
         display: 'flex',
@@ -28,6 +29,7 @@ export default function ({ applyFilter }) {
     return (
         <div style={formContainerStyle}>
             <Form form={form} 
+
                 onFinish={onFinish} layout="inline">
                 <Form.Item
                     name="dates"
@@ -40,34 +42,26 @@ export default function ({ applyFilter }) {
                         }
                     ]}
                 >
-                    <RangePicker
-                        format="YYYY-MM-DD"
-                        ranges={{
-                            'Today': [moment(), moment()],
-                            'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        }}
-                    />
+                    <RangePicker />
                 </Form.Item>
                 <Form.Item
                     name="poi"
                     label="PoI"
-                    initialValue="all"
-                >
-                    <Radio.Group>
-                        <Radio value="yes">Yes</Radio>
-                        <Radio value="no">No</Radio>
-                        <Radio value="all">All</Radio>
+                >   
+                    <Radio.Group defaultValue='any'>
+                        <Radio.Button value="any">any</Radio.Button>
+                        <Radio.Button value="yes">yes</Radio.Button>
+                        <Radio.Button value="no">no</Radio.Button>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item
                     name="doi"
                     label="DoI"
-                    initialValue="all"
                 >
-                    <Radio.Group>
-                        <Radio value="yes">Yes</Radio>
-                        <Radio value="no">No</Radio>
-                        <Radio value="all">All</Radio>
+                    <Radio.Group defaultValue='any'>
+                        <Radio.Button value="any">any</Radio.Button>
+                        <Radio.Button value="yes">yes</Radio.Button>
+                        <Radio.Button value="no">no</Radio.Button>
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item>

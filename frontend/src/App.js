@@ -5,7 +5,7 @@ import ArticleList2 from "./components/ArticleList2";
 import FilterForm from "./components/FilterForm";
 import { Routes, Route } from "react-router-dom";
 import { useSessionManager } from "./utils/Auth";
-import Main from "./components/Main";
+import { Divider } from 'antd';
 import Container from "@mui/material/Container";
 
 function App() {
@@ -40,7 +40,8 @@ function App() {
     <Container>
       <h1 style={{ textAlign: 'center' }}>Knowledge Horizon</h1>
       <FilterForm applyFilter={applyFilter}/>
-      <div style={{ textAlign: 'center', fontSize: 10 }}>Results: {articleList.length}</div>
+      <Divider />
+      <div style={{ textAlign: 'center', fontSize: 10, margin: 10 }}>- results: {articleList.length} -</div>
       <Routes>
         <Route path="/" element={<ArticleList1 articleList={articleList} />} />
         <Route path="/1" element={<ArticleList1 articleList={articleList} />} />
