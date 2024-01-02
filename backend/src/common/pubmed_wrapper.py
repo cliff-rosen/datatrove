@@ -177,24 +177,6 @@ class Article():
         return year + "-" + month + "-" + day
 
 
-def _get_article_from_xml(article):
-
-    pmid = article.find(".//PMID").text
-    print('pmid: ', pmid)
-
-    title = article.find(".//ArticleTitle").text
-
-    abstract_texts = article.findall('.//Abstract/AbstractText')
-    abstract = ""
-    for abstract_text in abstract_texts:
-        abstract += ''.join(abstract_text.itertext())
-
-    comp_date = _get_date(article)
-
-
-    return [pmid, comp_date, title, abstract]
-
-
 def _get_date_clause(start_date, end_date):
     clause = 'AND (("<sdate>"[Date - Completion] : "<edate>"[Date - Completion]))'
     clause = clause.replace("<sdate", start_date)

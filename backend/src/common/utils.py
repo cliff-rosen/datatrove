@@ -1,27 +1,23 @@
 
 
-def get_score_from_features(features):
+def get_score_from_features(article):
 
-    min_len = 5
-    while len(features) < min_len:
-        features.append("")
-
-    [poi_relevance, doi_relevance, is_systematic, study_type, study_outcomes] = features
-
-    poi_relevance = poi_relevance.upper()
-    doi_relevance = doi_relevance.upper()
-    is_systematic = is_systematic.upper()
+    poi_relevance = article['poi'].upper()
+    doi_relevance = article['doi'].upper()
+    is_systematic = article['is_systematic'].upper()
+    study_type = article['study_type']
+    study_outcome = article['study_outcome']
 
     # Check if PoI and DoI are both 'YES'
     if poi_relevance == "YES" and doi_relevance == "YES":
-        if "effectiveness" in study_outcomes:
+        if "effectiveness" in study_outcome:
             if study_type == "human RCT":
                 return 10
             else:
                 return 9
-        elif "safety" in study_outcomes:
+        elif "safety" in study_outcome:
             return 8
-        elif "diagnostics" in study_outcomes:
+        elif "diagnostics" in study_outcome:
             if is_systematic == 'YES':
                 return 7
             else:
@@ -33,7 +29,7 @@ def get_score_from_features(features):
 
     # Check if PoI is 'NO' and DoI is 'YES'
     elif poi_relevance == "NO" and doi_relevance == "YES":
-        if "effectiveness" in study_outcomes or "safety" in study_outcomes:
+        if "effectiveness" in study_outcome or "safety" in study_outcome:
             if study_type in ["human RCT", "human non-RCT"]:
                 if is_systematic == "YES":
                     return 5
@@ -41,7 +37,7 @@ def get_score_from_features(features):
                     return 4
             else:
                 return 3
-        elif "diagnostics" in study_outcomes:
+        elif "diagnostics" in study_outcome:
             if study_type in ["human RCT", "human non-RCT"]:
                 return 4
             else:
@@ -51,13 +47,13 @@ def get_score_from_features(features):
 
     # Check if PoI is 'YES' and DoI is 'No'
     elif poi_relevance == "YES" and doi_relevance == "NO":
-        if ("effectiveness" in study_outcomes or "safety" in study_outcomes):
+        if ("effectiveness" in study_outcome or "safety" in study_outcome):
             if study_type == "human RCT":
                 return 7
             if is_systematic == "YES":
                 return 6
             return 5
-        elif "diagnostics" in study_outcomes:
+        elif "diagnostics" in study_outcome:
             if is_systematic == "YES":
                 return 4
             else:

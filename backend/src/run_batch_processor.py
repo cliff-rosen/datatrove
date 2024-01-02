@@ -29,8 +29,7 @@ def _get_messages(content):
     return messages
 
 
-def _get_features_from_json(article):
-    (PMID, feature_json) = article
+def _get_features_from_json(pmid, feature_json):
     if feature_json == "" or feature_json == 'ERROR':
         print ('get_features_from_json called with bad value')
         return ["ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR"]
@@ -63,7 +62,7 @@ def _get_features_from_json(article):
         obj["study_type"]="ERROR"
 
     return {
-        'PMID': PMID,
+        'PMID': pmid,
         'poi': obj["pathway_rel"], 
         'doi': obj["disease_rel"],
         'is_systematic': obj["is_systematic"],
@@ -72,6 +71,24 @@ def _get_features_from_json(article):
         'poi_list': obj["relevant_pathways"],
         'doi_list': obj["relevant_diseases"]
     }
+
+
+async def _do_generate_features(article, prompt):
+    pmid = article['pmid']
+    title = article['title']
+    abstract = article['abstract']
+    content = prompt + '<ABSTRACT>' + title + '\n' + abstract + '</ABSTRACT>'
+    res = await model.agenerate(_get_messages(content), 0, 'json')
+    return _get_features_from_json(pmid, res)
+
+
+async def _do_generate_summary(article, prompt):
+    pmid = article['pmid']
+    title = article['title']
+    abstract = article['abstract']
+    content = prompt + title + '\n' + abstract
+    res = await model.agenerate(_get_messages(content), 0, 'text')
+    return {'pmid': pmid, 'summary': res}
 
 
 def load_articles_from_date_range(sd, ed):
@@ -93,29 +110,18 @@ def load_articles_from_date_range(sd, ed):
     print('back')
 
 
-async def _do_generate_features(article, prompt):
-    pmid = article['pmid']
-    title = article['title']
-    abstract = article['abstract']
-    content = prompt + '<ABSTRACT>' + title + '\n' + abstract + '</ABSTRACT>'
-    res = await model.agenerate(_get_messages(content), 0, 'json')
-    return (pmid, res)
-
-
 async def update_features():
+    BATCH_SIZE = 200
     print('starting')
     articles_with_features = []
-
-    # get prompt and articles from sheet
     gs.google_auth(SPREADSHEET_ID)
     prompt = gs.get_prompt()
     articles = db.get_articles_by_batch(BATCH)
     #articles = articles[0:10]
 
     # run articles through model to generate features
-    batch_size = 200
     low = 0
-    high = min(len(articles), low + batch_size)
+    high = min(len(articles), low + BATCH_SIZE)
     while low < len(articles):
         print(f"Running batch from {low} to {high}")
         tasks = [
@@ -123,58 +129,40 @@ async def update_features():
             for i in range(low, high)
         ]
         print(' about to await tasks...')
-        results = await asyncio.gather(*tasks)                 
-        new_articles_with_features = [_get_features_from_json(results[i]) for i in range(0, len(results))]
-        articles_with_features = articles_with_features + [new_articles_with_features]
-        low += batch_size
-        high = min(len(articles), low + batch_size)
+        new_articles_with_features = await asyncio.gather(*tasks)                 
+        articles_with_features = articles_with_features + new_articles_with_features
+        low += BATCH_SIZE
+        high = min(len(articles), low + BATCH_SIZE)
         print(" back from running tasks")
-        time.sleep(2)
+        time.sleep(10)
 
     # write features back to db
-    db.update_articles_features(new_articles_with_features)
+    db.update_articles_features(articles_with_features)
 
 
 def update_scores():
-    scores = []
-    gs.google_auth(SPREADSHEET_ID)
-
-    print("restrieving articles")
-    articles = gs.get_article_features()
+    print("retrieving articles")
+    articles = db.get_articles_by_batch(BATCH)
 
     print("calculating scores")
     for article in articles:
-        score = get_score_from_features(article)
-        scores.append([score])
+        article['score'] = get_score_from_features(article)
 
     print("updating scores")
-    gs.upload_article_scores(scores)
-
-
-async def _do_generate_summary(article, prompt):
-    pmid = article['pmid']
-    title = article['title']
-    abstract = article['abstract']
-    content = title + '\n' + abstract
-    res = await model.agenerate(_get_messages(content), 0, 'text')
-    return (pmid, res)
+    db.update_articles_scores(articles)
 
 
 async def generate_summaries():
+    BATCH_SIZE = 200
     print('starting')
-
-    summaries = []
-    # get prompt and articles from sheet
-    #prompt = gs.get_prompt()
+    articles_with_summaries = []
     prompt = "Create a two sentence summary of the following abstract: \n\n"
-    articles = db.get_articles(1,1)
-
-    articles = articles[0:20]
+    articles = db.get_articles_by_batch(BATCH)
+    #articles = articles[0:20]
 
     # run articles through model
-    batch_size = 10
     low = 0
-    high = min(len(articles), low + batch_size)
+    high = min(len(articles), low + BATCH_SIZE)
     while low < len(articles):
         print(f"Running batch from {low} to {high}")
         tasks = [
@@ -182,17 +170,15 @@ async def generate_summaries():
             for i in range(low, high)
         ]
         print(' about to await tasks...')
-        results = await asyncio.gather(*tasks)                 
-        new_rows = [(articles[i]['pmid'], results[i]) for i in range(0, len(results))]
-        summaries += new_rows
-        low += batch_size
-        high = min(len(articles), low + batch_size)
+        new_rows = await asyncio.gather(*tasks)                 
+        articles_with_summaries += new_rows
+        low += BATCH_SIZE
+        high = min(len(articles), low + BATCH_SIZE)
         print(" back from running tasks")
         time.sleep(10)
 
     # update sheet with results
-    
-    print(summaries)
+    db.update_articles_summaries(articles_with_summaries)
 
 
 async def test():
@@ -219,10 +205,10 @@ end_date = '2023/11/30'
 #load_articles_from_date_range(start_date, end_date)
 
 # STEP 2: extract features from articles and write to Results
-asyncio.run(update_features())
+#asyncio.run(update_features())
 
 # STEP 3: update Results scores from features 
-#update_scores()
+update_scores()
 
 # STEP x: generate and store summary
 #asyncio.run(generate_summaries())

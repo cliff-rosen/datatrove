@@ -36,7 +36,9 @@ def get_articles_by_batch(batch):
     query_text = f"""
         SELECT *
         FROM articles
-        where batch = {batch}
+        WHERE batch = {batch}
+        ORDER BY score desc
+        LIMIT 20
         """
     cur.execute(query_text)
     rows = cur.fetchall()
@@ -77,6 +79,7 @@ def insert_articles(pmid, title, abstract, comp_date, year,
     return res
 
 
+# articles is list of Article objects
 def insert_articles_bulk(articles, batch=0):
     try:
         conn = get_connection()
@@ -121,6 +124,7 @@ def update_articles_main(pmid, title, abstract, comp_date, year,
     return res
 
 
+# articles is list of Article dicts
 def update_articles_features(articles):
     try:
         conn = get_connection()
@@ -144,7 +148,7 @@ def update_articles_features(articles):
     return res
 
 
-def update_articles_summary(pmid, summary):
+def update_articles_summaries(articles):
     try:
         conn = get_connection()
         with conn.cursor() as cursor:
@@ -153,8 +157,30 @@ def update_articles_summary(pmid, summary):
                 SET summary = %s
                 WHERE pmid = %s
                 """    
-            record = (summary, pmid)
-            res = cursor.execute(query, record)
+            records = [(article['summary'], article['pmid']) 
+                      for article in articles]
+            res = cursor.executemany(query, records)
+            conn.commit()
+    except Exception as e:
+        print("***************************")
+        print("DB error in update\n", str(e))
+        raise
+
+    return res
+
+
+def update_articles_scores(articles):
+    try:
+        conn = get_connection()
+        with conn.cursor() as cursor:
+            query = """
+                UPDATE articles
+                SET score = %s
+                WHERE pmid = %s
+                """    
+            records = [(article['score'], article['pmid']) 
+                      for article in articles]
+            res = cursor.executemany(query, records)
             conn.commit()
     except Exception as e:
         print("***************************")
