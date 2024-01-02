@@ -18,10 +18,9 @@ export default function ({ articleList }) {
     return (
 
         <div style={{ maxWidth: '800px', margin: 'auto' }}>
-            <h1 style={{ textAlign: 'center' }}>Knowledge Horizon</h1>
                 {articleList.map(article => (
                 <Card
-                    key={article.PMID}
+                    key={article.pmid}
                     title={
                         <span style={{ 
                             fontSize: '14px', 

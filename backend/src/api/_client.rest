@@ -2,6 +2,6 @@ GET http://127.0.0.1:5001/hello
 accept: application/json
 ###
 
-GET http://127.0.0.1:5001/search
+GET http://127.0.0.1:5001/search?startDate=2023-11-01&endDate=2024-01-02
 accept: application/json
 ###
