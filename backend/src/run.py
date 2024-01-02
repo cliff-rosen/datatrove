@@ -3,6 +3,7 @@ from xml.etree import ElementTree as ET
 import common.pubmed_wrapper as pm
 from common.pubmed_wrapper import Article
 from common import db
+from common import gsheets as gs
 
 """
 ids = ['22486366', '35858505', '38007612']
@@ -53,6 +54,12 @@ study_outcome = "Increased efficiency in neural network training"
 poi_list = "XYZ123, ABC456, LMN789"
 doi_list = "10.1000/j.ai.2023.06.001, 10.1000/j.ai.2023.06.002, 10.1000/j.ai.2023.06.003"
 score = 85
+
+SPREADSHEET_ID = '1my0yZpRRm5VJi5Zx-62saht4sSIa43zc--UMJnr0Inc'
+print('start')
+gs.google_auth(SPREADSHEET_ID)
+articles = gs.get_articles()
+print(articles[0:5])
 
 #res = db.update_articles_main(pmid, title, abstract, date_pub, year, 
 #                     authors, journal, volume, issue, medium, pages)

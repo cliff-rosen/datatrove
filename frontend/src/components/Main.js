@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchGet, fetchPost } from "../utils/APIUtils";
-import ArticleList from "./ArticleList";
+import ArticleList1 from "./ArticleList1";
 
 export default function Main({ sessionManager }) {
 
@@ -19,7 +19,7 @@ export default function Main({ sessionManager }) {
     if (articleList.length == 0) return <div>*</div>
 
     return (
-              <ArticleList
+              <ArticleList1
                 articleList={articleList}
               />
     )};

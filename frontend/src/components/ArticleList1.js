@@ -39,7 +39,8 @@ export default function ({ articleList }) {
                     extra={<Button onClick={() => copyToClipboard(article.title, article.abstract)}>Copy</Button>} // Add Copy button here
 
                 >
-                    <Tag color="green">DoI</Tag><Tag color="blue">PoI</Tag>
+                    {article.doi === 'yes' && <Tag color="green">DoI</Tag>}
+                    {article.poi === 'yes' && <Tag color="blue">PoI</Tag>}
                     <p><strong>Authors:</strong> {article.authors}</p>
                     <p><strong>Journal:</strong> {article.journal} | <strong>Year:</strong> {article.year}</p>
                     <p><strong>Volume:</strong> {article.volume} | <strong>Issue:</strong> {article.issue} | <strong>Pages:</strong> {article.pages}</p>

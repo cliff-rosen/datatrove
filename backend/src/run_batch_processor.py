@@ -22,13 +22,9 @@ FILTER_TERM = "(melanocortin) OR (natriuretic) OR (Dry eye) OR (Ulcerative colit
 logging.info('Starting')
 
 
-def _get_messages(article, prompt):
-    if len(article) == 3: # missing abstract
-        article.append('')
-    content = article[2] + '\n\n' + article[3]
-    sys_msg = prompt + '\n\n<ABSTRACT>' + content + '</ABSTRACT>'
+def _get_messages(content):
     messages =  [
-        {"role": "system", "content": sys_msg}
+        {"role": "system", "content": content}
       ]
     return messages
 
@@ -90,9 +86,8 @@ def load_articles_from_date_range(sd, ed):
     # get articles from ids
     articles = pm.get_articles_from_ids(ids)
 
-    # write articles to sheet
-    gs.google_auth(SPREADSHEET_ID)
-    gs.upload_articles(articles)
+    # write articles to db
+    db.insert_articles_bulk(articles, 1)
 
     print('back')
 
@@ -148,6 +143,50 @@ def update_scores():
     gs.upload_article_scores(scores)
 
 
+async def do_generate_summary(article, prompt):
+    pmid = article['pmid']
+    title = article['title']
+    abstract = article['abstract']
+    content = title + '\n' + abstract
+    res = await model.agenerate(_get_messages(content), 0, 'text')
+    return (pmid, res)
+
+
+async def generate_summaries():
+    print('starting')
+
+    summaries = []
+    # get prompt and articles from sheet
+    #prompt = gs.get_prompt()
+    prompt = "Create a two sentence summary of the following abstract: \n\n"
+    articles = db.get_articles(1,1)
+
+    articles = articles[0:20]
+
+    # run articles through model
+    batch_size = 10
+    low = 0
+    high = min(len(articles), low + batch_size)
+    while low < len(articles):
+        print(f"Running batch from {low} to {high}")
+        tasks = [
+            asyncio.create_task(do_generate_summary(articles[i], prompt)) 
+            for i in range(low, high)
+        ]
+        print(' about to await tasks...')
+        results = await asyncio.gather(*tasks)                 
+        new_rows = [(articles[i]['pmid'], results[i]) for i in range(0, len(results))]
+        summaries += new_rows
+        low += batch_size
+        high = min(len(articles), low + batch_size)
+        print(" back from running tasks")
+        time.sleep(10)
+
+    # update sheet with results
+    
+    print(summaries)
+
+
 async def test():
     gs.google_auth(SPREADSHEET_ID)
 
@@ -167,15 +206,33 @@ async def test():
 start_date = '2023/11/01'
 end_date = '2023/11/30'
 
+
+# STEP 1: load articles in date range from PubMed to articles table
+load_articles_from_date_range(start_date, end_date)
+
+# STEP 2: extract features from articles and write to Results
+#asyncio.run(update_features())
+
+# STEP 3: update Results scores from features 
+#update_scores()
+
+# STEP x: generate and store summary
+#asyncio.run(generate_summaries())
+
+#asyncio.run(test())
+# print(pm.get_articles_from_ids(['38004229']))
+
+"""
 res = pm.get_article_ids_by_date_range(FILTER_TERM, start_date, end_date)
 ids = res['ids']
 print(res['status_code'])
 print(res['count'])
-print(res['ids'][0:10])
+#print(res['ids'][0:10])
 
-#ids = ['37851564']
-articles = pm.get_articles_from_ids(ids[0:10])
-for article in articles[0:2]:
+
+#ids = ['37960213']
+articles = pm.get_articles_from_ids(ids)
+for article in articles:
     print('------------------------------------')
     print(article)
     pmid = article.PMID
@@ -191,16 +248,4 @@ for article in articles[0:2]:
     pages = article.pages
     db.update_articles_main(pmid, title, abstract, comp_date, year, 
                          authors, journal, volume, issue, medium, pages)
-
-# STEP 1: load articles in date range from PubMed to Articles
-#load_articles_from_date_range(start_date, end_date)
-
-# STEP 2: extract features from articles and write to Results
-#asyncio.run(update_features())
-
-# STEP 3: update Results scores from features 
-#update_scores()
-
-#asyncio.run(test())
-# print(pm.get_articles_from_ids(['38004229']))
-
+"""

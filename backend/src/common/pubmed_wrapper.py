@@ -73,7 +73,7 @@ class Article():
             PMID = PMID_node.text
         print(PMID)
         if article_title_node is not None:
-            title = article_title_node.text
+            title = ''.join(article_title_node.itertext())
         if journal_title_node is not None:
             journal = journal_title_node.text
         if journal_issue_node is not None:
@@ -145,6 +145,7 @@ class Article():
         self.medium = kwargs['medium']
 
     def __str__(self):
+        line = "===================================================\n"        
         res = "PMID: " + self.PMID + '\n' \
             + "Comp date: " + self.comp_date + '\n' \
             + "Title: " + self.title[0:80] + '\n' \
@@ -156,7 +157,7 @@ class Article():
             + 'Issue: ' + self.issue + '\n' \
             + 'Medium: ' + self.medium
         
-        return res
+        return line + res
 
     def _get_date_from_node(date_completed_node):
         if date_completed_node is None:
