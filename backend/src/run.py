@@ -55,11 +55,10 @@ poi_list = "XYZ123, ABC456, LMN789"
 doi_list = "10.1000/j.ai.2023.06.001, 10.1000/j.ai.2023.06.002, 10.1000/j.ai.2023.06.003"
 score = 85
 
-SPREADSHEET_ID = '1my0yZpRRm5VJi5Zx-62saht4sSIa43zc--UMJnr0Inc'
 print('start')
-gs.google_auth(SPREADSHEET_ID)
-articles = gs.get_articles()
-print(articles[0:5])
+a = [1,2,3,4,5]
+b = [6]
+print(a + b)
 
 #res = db.update_articles_main(pmid, title, abstract, date_pub, year, 
 #                     authors, journal, volume, issue, medium, pages)

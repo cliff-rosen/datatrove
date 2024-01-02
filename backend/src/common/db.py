@@ -30,6 +30,20 @@ def l_to_d(keys, values):
 
 ##### ARTICLES #####
 
+def get_articles_by_batch(batch):
+    conn = get_connection()
+    cur = conn.cursor()
+    query_text = f"""
+        SELECT *
+        FROM articles
+        where batch = {batch}
+        """
+    cur.execute(query_text)
+    rows = cur.fetchall()
+    close_connection(conn)
+    return rows
+
+
 def get_articles(PoI, DoI):
     conn = get_connection()
     cur = conn.cursor()
@@ -41,9 +55,6 @@ def get_articles(PoI, DoI):
     rows = cur.fetchall()
     close_connection(conn)
     return rows
-
-
-#def update_articles(pmid, title, abstract, date_pub, year, authors, journal, volume, issue, medium, pages, poi, doi, is_systematic, study_type, study_outcome, poi_list, doi_list, score):
 
 
 def insert_articles(pmid, title, abstract, comp_date, year,
@@ -110,20 +121,20 @@ def update_articles_main(pmid, title, abstract, comp_date, year,
     return res
 
 
-def update_articles_features(pmid, poi, doi, is_systematic, 
-                             study_type, study_outcome, poi_list, doi_list, score):
+def update_articles_features(articles):
     try:
         conn = get_connection()
         with conn.cursor() as cursor:
             query = """
                 UPDATE articles
                 SET poi = %s, doi = %s, is_systematic = %s,
-                    study_type = %s, study_outcome = %s, poi_list = %s, doi_list = %s, score = %s
+                    study_type = %s, study_outcome = %s, poi_list = %s, doi_list = %s
                 WHERE pmid = %s
                 """    
-            record = (poi, doi, is_systematic, 
-                             study_type, study_outcome, poi_list, doi_list, score, pmid)
-            res = cursor.execute(query, record)
+            record = [(article['poi'], article['doi'], article['is_systematic'], article['study_type'], 
+                       article['study_outcome'], article['poi_list'], article['doi_list'], article['PMID'])
+                      for article in articles]
+            res = cursor.executemany(query, record)
             conn.commit()
     except Exception as e:
         print("***************************")

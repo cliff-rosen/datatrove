@@ -250,3 +250,139 @@
 2024-01-01 23:00:18,774 - INFO - NumExpr defaulting to 8 threads.
 2024-01-01 23:00:19,093 - INFO - openai_wrapper loaded
 2024-01-01 23:00:19,388 - INFO - Starting
+2024-01-01 23:49:34,816 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 23:49:34,816 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 23:49:35,139 - INFO - openai_wrapper loaded
+2024-01-01 23:49:35,436 - INFO - Starting
+2024-01-01 23:49:42,520 - INFO - "GET /?state=Cg7fhN0StMpCLOXrBFvgedoB5RJUiw&code=4/0AfJohXmO25HxxlzvplMo3yK9Pv0zrpFXHvaIyH6rzp-PlR7Maxr5XcMGSI5xLJZ7Yv0WDg&scope=https://www.googleapis.com/auth/spreadsheets HTTP/1.1" 200 65
+2024-01-01 23:49:42,914 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-01 23:49:49,089 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:49:49,376 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:49:51,467 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:49:52,626 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:49:54,734 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:52:12,697 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-01 23:52:12,698 - INFO - NumExpr defaulting to 8 threads.
+2024-01-01 23:52:13,019 - INFO - openai_wrapper loaded
+2024-01-01 23:52:13,316 - INFO - Starting
+2024-01-01 23:52:13,324 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-01 23:52:19,935 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:52:20,019 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:52:21,279 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:52:22,339 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-01 23:52:22,588 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:03:18,317 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:03:18,317 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:03:18,649 - INFO - openai_wrapper loaded
+2024-01-02 00:03:18,946 - INFO - Starting
+2024-01-02 00:03:18,956 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:03:25,538 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:03:26,644 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:03:26,999 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:03:27,203 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:03:30,958 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:05:00,358 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:05:00,358 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:05:00,680 - INFO - openai_wrapper loaded
+2024-01-02 00:05:00,979 - INFO - Starting
+2024-01-02 00:05:00,983 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:05:07,624 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:05:08,644 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:05:11,588 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:05:13,942 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:05:14,042 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:07:40,906 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:07:40,906 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:07:41,223 - INFO - openai_wrapper loaded
+2024-01-02 00:07:41,517 - INFO - Starting
+2024-01-02 00:07:41,522 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:07:46,858 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:07:48,210 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:07:49,823 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:07:49,886 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:07:51,335 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:10:40,496 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:10:40,496 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:10:40,812 - INFO - openai_wrapper loaded
+2024-01-02 00:10:41,107 - INFO - Starting
+2024-01-02 00:10:41,111 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:10:48,485 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:10:49,691 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:10:49,840 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:10:50,958 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:10:52,516 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:11:50,125 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:11:50,125 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:11:50,450 - INFO - openai_wrapper loaded
+2024-01-02 00:11:50,756 - INFO - Starting
+2024-01-02 00:11:50,761 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:11:55,560 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:11:56,634 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:11:58,272 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:11:58,522 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:11:59,038 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:12:22,334 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:12:22,334 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:12:22,674 - INFO - openai_wrapper loaded
+2024-01-02 00:12:22,981 - INFO - Starting
+2024-01-02 00:12:22,985 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:12:29,140 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:12:30,096 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:12:30,198 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:12:31,670 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:12:35,724 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:14:36,612 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:14:36,612 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:14:36,945 - INFO - openai_wrapper loaded
+2024-01-02 00:14:37,240 - INFO - Starting
+2024-01-02 00:14:37,244 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:14:43,514 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:14:43,662 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:14:43,691 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:14:44,872 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:14:45,677 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:17:30,936 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:17:30,937 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:17:31,260 - INFO - openai_wrapper loaded
+2024-01-02 00:17:31,563 - INFO - Starting
+2024-01-02 00:17:31,568 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:17:36,890 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:17:38,842 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:17:40,611 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:17:40,816 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:17:42,418 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:18:56,751 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:18:56,751 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:18:57,069 - INFO - openai_wrapper loaded
+2024-01-02 00:18:57,367 - INFO - Starting
+2024-01-02 00:18:57,372 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:19:03,172 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:19:03,573 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:19:03,591 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:19:03,678 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:19:03,705 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:21:06,028 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:21:06,028 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:21:06,397 - INFO - openai_wrapper loaded
+2024-01-02 00:21:06,710 - INFO - Starting
+2024-01-02 00:21:06,715 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:21:13,666 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:21:13,858 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:21:17,210 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:21:17,544 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:21:18,032 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:02,344 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-02 00:23:02,344 - INFO - NumExpr defaulting to 8 threads.
+2024-01-02 00:23:02,700 - INFO - openai_wrapper loaded
+2024-01-02 00:23:03,020 - INFO - Starting
+2024-01-02 00:23:03,023 - INFO - file_cache is only supported with oauth2client<4.0.0
+2024-01-02 00:23:09,550 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:10,190 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:11,021 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:12,698 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:12,840 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:18,656 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:18,781 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:19,387 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:19,638 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-02 00:23:19,961 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
