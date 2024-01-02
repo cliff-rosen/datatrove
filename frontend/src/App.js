@@ -10,22 +10,23 @@ import Container from "@mui/material/Container";
 
 function App() {
   const [articleList, setArticleList] = useState([]);
+  const [startDate, setStartDate] = useState('2023-11-01')
+  const [endDate, setEndDate] = useState('2023-11-30')
+
   const sessionManager = {}
   // const sessionManager = useSessionManager();
   
 
-  const applyFilter = async (startDate, endDate) => {
+  const applyFilter = async (startDate, endDate, poi, doi) => {
     console.log("applyFilter:", startDate, endDate)
     setArticleList([])
-    const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}`)
+    const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&poi=${poi}&doi=${doi}`)
     setArticleList(res.articles)
 
   }
 
   useEffect(() => {
       const getArticles = async () => {
-          const startDate = '2024-01-01'
-          const endDate = '2024-01-02'
           const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}`)
           setArticleList(res.articles)
       }
@@ -39,6 +40,7 @@ function App() {
     <Container>
       <h1 style={{ textAlign: 'center' }}>Knowledge Horizon</h1>
       <FilterForm applyFilter={applyFilter}/>
+      <div style={{ textAlign: 'center', fontSize: 10 }}>Results: {articleList.length}</div>
       <Routes>
         <Route path="/" element={<ArticleList1 articleList={articleList} />} />
         <Route path="/1" element={<ArticleList1 articleList={articleList} />} />

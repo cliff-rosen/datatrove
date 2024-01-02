@@ -45,6 +45,34 @@ def get_articles_by_batch(batch):
     close_connection(conn)
     return rows
 
+
+def get_articles_filter(batch,
+                        start_date, end_date,
+                        poi_rel='',
+                        doi_rel=''
+                        ):
+    conn = get_connection()
+    cur = conn.cursor()
+    query_text = f"""
+        SELECT *
+        FROM articles
+        WHERE comp_date >= '{start_date}'
+            AND comp_date <= '{end_date}'
+            AND batch = {batch}
+        """
+    if poi_rel in ['yes', 'no']:
+        query_text += ' AND poi = "' + poi_rel + '"'
+    if doi_rel in ['yes', 'no']:
+        query_text += ' AND doi = "' + doi_rel + '"'
+    query_text += ' ORDER BY score desc'
+    query_text += ' LIMIT 50'
+    print(query_text)
+    cur.execute(query_text)
+    rows = cur.fetchall()
+    close_connection(conn)
+    return rows
+
+
 def get_articles_by_date(start_date, end_date, batch=1):
     conn = get_connection()
     cur = conn.cursor()

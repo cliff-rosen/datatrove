@@ -25,9 +25,15 @@ class Search(Resource):
     def get(self):
         start_date = request.args.get('startDate')
         end_date = request.args.get('endDate')
+        poi = request.args.get('poi')
+        doi = request.args.get('doi')
+        batch = 1
+
+        articles = search.get_articles(batch, start_date, end_date, poi, doi)
 
         return {"result": "OK",
-                "articles": search.get_articles(start_date, end_date)
+                "count": len(articles),
+                "articles": articles
         }
 
 
