@@ -18,13 +18,13 @@ export default function ({ articleList }) {
     return (
 
         <div style={{ maxWidth: '800px', margin: 'auto' }}>
-                {articleList.map(article => (
+            {articleList.map(article => (
                 <Card
                     key={article.pmid}
                     title={
-                        <span style={{ 
-                            fontSize: '12px', 
-                            fontWeight: 'bold', 
+                        <span style={{
+                            fontSize: '12px',
+                            fontWeight: 'bold',
                             color: '#fff', // white text color
                             backgroundColor: '#aaa', // darker background
                             display: 'block',
@@ -32,7 +32,7 @@ export default function ({ articleList }) {
                         }}>
                             {article.title}
                         </span>
-                    }                    
+                    }
                     style={{ marginBottom: '10px' }}
                     type="inner"
                     extra={<Button onClick={() => copyToClipboard(article.title, article.abstract)}>Copy</Button>} // Add Copy button here
