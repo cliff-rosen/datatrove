@@ -198,7 +198,9 @@ async def test():
 BATCH = 1
 start_date = '2023/11/01'
 end_date = '2023/11/30'
-asyncio.run(test())
+res = pm.get_article_ids_by_date_range(FILTER_TERM, start_date, end_date)
+print(res['ids'][0:10])
+#asyncio.run(test())
 
 # STEP 1: load articles in date range from PubMed to articles table
 #load_articles_from_date_range(start_date, end_date)

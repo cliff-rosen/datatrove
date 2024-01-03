@@ -65,7 +65,7 @@ def get_articles_filter(batch,
     if doi_rel in ['yes', 'no']:
         query_text += ' AND doi = "' + doi_rel + '"'
     query_text += ' ORDER BY score desc'
-    query_text += ' LIMIT 50'
+    #query_text += ' LIMIT 50'
     print(query_text)
     cur.execute(query_text)
     rows = cur.fetchall()

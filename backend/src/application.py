@@ -33,7 +33,7 @@ class Search(Resource):
 
         return {"result": "OK",
                 "count": len(articles),
-                "articles": articles
+                "articles": articles[0:20]
         }
 
 

@@ -10811,3 +10811,15 @@
 2024-01-02 06:22:56,715 - INFO - Starting
 2024-01-02 06:22:57,140 - INFO - file_cache is only supported with oauth2client<4.0.0
 2024-01-02 06:23:03,410 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-01-03 12:40:34,173 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-03 12:40:34,173 - INFO - NumExpr defaulting to 8 threads.
+2024-01-03 12:40:37,374 - INFO - openai_wrapper loaded
+2024-01-03 12:40:37,705 - INFO - Starting
+2024-01-03 12:41:19,795 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-03 12:41:19,795 - INFO - NumExpr defaulting to 8 threads.
+2024-01-03 12:41:20,117 - INFO - openai_wrapper loaded
+2024-01-03 12:41:20,413 - INFO - Starting
+2024-01-03 12:41:53,488 - INFO - Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2024-01-03 12:41:53,488 - INFO - NumExpr defaulting to 8 threads.
+2024-01-03 12:41:53,810 - INFO - openai_wrapper loaded
+2024-01-03 12:41:54,115 - INFO - Starting
