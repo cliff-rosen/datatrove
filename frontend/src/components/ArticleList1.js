@@ -41,7 +41,10 @@ export default function ({ articleList }) {
                     {article.doi === 'yes' && <Tag color="green">DoI</Tag>}
                     {article.poi === 'yes' && <Tag color="blue">PoI</Tag>}
                     <p><strong>Score:</strong> {article.score}</p>
-                    <p><strong>DoIs:</strong> {article.doi_list} | <strong>PoIs:</strong> {article.poi_list}</p>
+                    <p>
+                        {article.doi_list && <span><strong>DoIs:</strong> {article.doi_list}</span>}{article.doi_list && article.poi_list && <span> | </span>}
+                        {article.poi_list && <span><strong>PoIs:</strong> {article.poi_list} </span>}
+                    </p>
                     <p><strong>Study Outcome:</strong> {article.study_outcome} | <strong>Study Type:</strong> {article.study_type} | <strong>Systematic:</strong> {article.is_systematic}</p>
                     <p><strong>PMID:</strong> {article.pmid}</p>
                     <p><strong>Authors:</strong> {article.authors}</p>

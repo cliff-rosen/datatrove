@@ -13,12 +13,11 @@ export default function () {
 
     const [articleList, setArticleList] = useState([]);
 
-    const applyFilter = async (startDate, endDate, poi, doi) => {
+    const applyFilter = async (startDate, endDate, poi, doi, minScore, maxScore) => {
         console.log("applyFilter:", startDate, endDate)
         setArticleList([])
-        const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&poi=${poi}&doi=${doi}`)
+        const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&minScore=${minScore}&maxScore=${maxScore}`)
         setArticleList(res.articles)
-
     }
 
     const handleChange = (value) => {
@@ -27,7 +26,7 @@ export default function () {
 
     useEffect(() => {
         const getArticles = async () => {
-            const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}`)
+            const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&minScore=0&maxScore=10`)
             setArticleList(res.articles)
         }
         getArticles()

@@ -14,23 +14,14 @@ export default function () {
     const [endDate, setEndDate] = useState('2023-11-30')
     const { Panel } = Collapse;
 
-    const applyFilter = async (startDate, endDate, poi, doi) => {
+    const applyFilter = async (startDate, endDate, poi, doi, minScore, maxScore) => {
         console.log("applyFilter:", startDate, endDate)
         setArticleCount('***')
         setArticleList([])
-        const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&poi=${poi}&doi=${doi}`)
+        const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&poi=${poi}&doi=${doi}&minScore=${minScore}&maxScore=${maxScore}`)
         setArticleList(res.articles)
         setArticleCount(res.count)
     }
-
-    const copyToClipboard = (title, abstract) => {
-        const textToCopy = `Title: ${title}\nAbstract: ${abstract}`;
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            alert('Copied to clipboard!'); // You can replace this with a more subtle notification
-        }, (err) => {
-            console.error('Error copying text: ', err);
-        });
-    };
 
     return (
 

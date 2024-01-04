@@ -13,13 +13,15 @@ const Nav = () => {
             style={{
                 display: "flex",
                 alignItems: "center",
+                paddingTop: 10,
                 paddingBottom: 10,
                 border: "none",
             }}
         >
+
             <Typography variant="h6">
                 <Link to="/" style={{ textDecoration: "none" }}>
-                    Knowledge Horizon
+                    <img src="logo1.png" alt="Knowledge Horizon" style={{ width: 250, height: 50, marginRight: 10 }} />
                 </Link>
             </Typography>
             <div style={{ minWidth: 20 }}></div>
@@ -30,6 +32,7 @@ const Nav = () => {
                     border: "none",
                 }}
             >
+
             </Box>
             <Box sx={{ flexGrow: 0, fontSize: "1em" }}>
                 <span>
