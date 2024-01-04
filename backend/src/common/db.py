@@ -50,7 +50,9 @@ def get_articles_by_batch(batch):
     return rows
 
 
-def get_articles_filter(batch, start_date, end_date, poi_rel="", doi_rel=""):
+def get_articles_filter(
+    batch, start_date, end_date, poi_rel="", doi_rel="", min_score=0, max_score=10
+):
     conn = get_connection()
     cur = conn.cursor()
     query_text = f"""
@@ -59,6 +61,8 @@ def get_articles_filter(batch, start_date, end_date, poi_rel="", doi_rel=""):
         WHERE comp_date >= '{start_date}'
             AND comp_date <= '{end_date}'
             AND batch = {batch}
+            AND score >= {min_score}
+            AND score <= {max_score}
         """
     if poi_rel in ["yes", "no"]:
         query_text += ' AND poi = "' + poi_rel + '"'
