@@ -1,14 +1,16 @@
 import pymysql.cursors
 import json
-import logging
+
+# import logging
 import local_secrets as secrets
 
 DB_SECRETS = secrets.DB_SECRETS
 
-logger = logging.getLogger()
+# logger = logging.getLogger()
 
 
 ##### CONNECTIONS #####
+
 
 def get_connection():
     conn = pymysql.connect(
@@ -16,7 +18,8 @@ def get_connection():
         password=DB_SECRETS["DB_PASSWORD"],
         host=DB_SECRETS["DB_HOST"],
         database=DB_SECRETS["DB_NAME"],
-        cursorclass=pymysql.cursors.DictCursor)
+        cursorclass=pymysql.cursors.DictCursor,
+    )
     return conn
 
 
@@ -29,6 +32,7 @@ def l_to_d(keys, values):
 
 
 ##### ARTICLES #####
+
 
 def get_articles_by_batch(batch):
     conn = get_connection()
@@ -46,11 +50,7 @@ def get_articles_by_batch(batch):
     return rows
 
 
-def get_articles_filter(batch,
-                        start_date, end_date,
-                        poi_rel='',
-                        doi_rel=''
-                        ):
+def get_articles_filter(batch, start_date, end_date, poi_rel="", doi_rel=""):
     conn = get_connection()
     cur = conn.cursor()
     query_text = f"""
@@ -60,12 +60,12 @@ def get_articles_filter(batch,
             AND comp_date <= '{end_date}'
             AND batch = {batch}
         """
-    if poi_rel in ['yes', 'no']:
+    if poi_rel in ["yes", "no"]:
         query_text += ' AND poi = "' + poi_rel + '"'
-    if doi_rel in ['yes', 'no']:
+    if doi_rel in ["yes", "no"]:
         query_text += ' AND doi = "' + doi_rel + '"'
-    query_text += ' ORDER BY score desc'
-    #query_text += ' LIMIT 50'
+    query_text += " ORDER BY score desc"
+    # query_text += ' LIMIT 50'
     print(query_text)
     cur.execute(query_text)
     rows = cur.fetchall()
@@ -105,8 +105,20 @@ def get_articles(PoI, DoI):
     return rows
 
 
-def insert_articles(pmid, title, abstract, comp_date, year,
-                   authors, journal, volume, issue, medium, pages, batch=0):
+def insert_articles(
+    pmid,
+    title,
+    abstract,
+    comp_date,
+    year,
+    authors,
+    journal,
+    volume,
+    issue,
+    medium,
+    pages,
+    batch=0,
+):
     try:
         conn = get_connection()
         with conn.cursor() as cursor:
@@ -114,7 +126,20 @@ def insert_articles(pmid, title, abstract, comp_date, year,
                 INSERT INTO articles (pmid, title, abstract, comp_date, year, authors, journal, volume, issue, medium, pages)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
-            record = (pmid, title, abstract, comp_date, year, authors, journal, volume, issue, medium, pages, batch)
+            record = (
+                pmid,
+                title,
+                abstract,
+                comp_date,
+                year,
+                authors,
+                journal,
+                volume,
+                issue,
+                medium,
+                pages,
+                batch,
+            )
             res = cursor.execute(query, record)
             conn.commit()
     except Exception as e:
@@ -134,10 +159,23 @@ def insert_articles_bulk(articles, batch=0):
                 INSERT INTO articles (pmid, title, abstract, comp_date, year, authors, journal, volume, issue, medium, pages, batch)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
-            records = [(article.PMID, article.title, article.abstract,
-                        article.comp_date, article.year, article.authors, 
-                        article.journal, article.volume, article.issue,
-                        article.medium, article.pages, batch) for article in articles]
+            records = [
+                (
+                    article.PMID,
+                    article.title,
+                    article.abstract,
+                    article.comp_date,
+                    article.year,
+                    article.authors,
+                    article.journal,
+                    article.volume,
+                    article.issue,
+                    article.medium,
+                    article.pages,
+                    batch,
+                )
+                for article in articles
+            ]
             res = cursor.executemany(query, records)
             conn.commit()
     except Exception as e:
@@ -148,8 +186,19 @@ def insert_articles_bulk(articles, batch=0):
     return res
 
 
-def update_articles_main(pmid, title, abstract, comp_date, year, 
-                         authors, journal, volume, issue, medium, pages):
+def update_articles_main(
+    pmid,
+    title,
+    abstract,
+    comp_date,
+    year,
+    authors,
+    journal,
+    volume,
+    issue,
+    medium,
+    pages,
+):
     try:
         conn = get_connection()
         with conn.cursor() as cursor:
@@ -158,8 +207,20 @@ def update_articles_main(pmid, title, abstract, comp_date, year,
                 SET title = %s, abstract = %s, comp_date = %s, year = %s, authors = %s, 
                     journal = %s, volume = %s, issue = %s, medium = %s, pages = %s
                 WHERE pmid = %s
-                """    
-            record = (title, abstract, comp_date, year, authors, journal, volume, issue, medium, pages, pmid)
+                """
+            record = (
+                title,
+                abstract,
+                comp_date,
+                year,
+                authors,
+                journal,
+                volume,
+                issue,
+                medium,
+                pages,
+                pmid,
+            )
             res = cursor.execute(query, record)
             conn.commit()
     except Exception as e:
@@ -180,10 +241,20 @@ def update_articles_features(articles):
                 SET poi = %s, doi = %s, is_systematic = %s,
                     study_type = %s, study_outcome = %s, poi_list = %s, doi_list = %s
                 WHERE pmid = %s
-                """    
-            record = [(article['poi'], article['doi'], article['is_systematic'], article['study_type'], 
-                       article['study_outcome'], article['poi_list'], article['doi_list'], article['PMID'])
-                      for article in articles]
+                """
+            record = [
+                (
+                    article["poi"],
+                    article["doi"],
+                    article["is_systematic"],
+                    article["study_type"],
+                    article["study_outcome"],
+                    article["poi_list"],
+                    article["doi_list"],
+                    article["PMID"],
+                )
+                for article in articles
+            ]
             res = cursor.executemany(query, record)
             conn.commit()
     except Exception as e:
@@ -202,9 +273,8 @@ def update_articles_summaries(articles):
                 UPDATE articles
                 SET summary = %s
                 WHERE pmid = %s
-                """    
-            records = [(article['summary'], article['pmid']) 
-                      for article in articles]
+                """
+            records = [(article["summary"], article["pmid"]) for article in articles]
             res = cursor.executemany(query, records)
             conn.commit()
     except Exception as e:
@@ -223,9 +293,8 @@ def update_articles_scores(articles):
                 UPDATE articles
                 SET score = %s
                 WHERE pmid = %s
-                """    
-            records = [(article['score'], article['pmid']) 
-                      for article in articles]
+                """
+            records = [(article["score"], article["pmid"]) for article in articles]
             res = cursor.executemany(query, records)
             conn.commit()
     except Exception as e:
@@ -234,4 +303,3 @@ def update_articles_scores(articles):
         raise
 
     return res
-
