@@ -35,10 +35,11 @@ export default function ({ applyFilter }) {
     };
 
     return (
-        <div>
+        <div style={{ margin: 'auto' }}>
 
             <Form form={form}
-                onFinish={onFinish} layout="inline">
+                onFinish={onFinish} layout="inline"
+            >
                 <div>
                     <div style={formContainerStyle}>
                         <Form.Item

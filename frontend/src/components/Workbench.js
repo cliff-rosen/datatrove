@@ -25,7 +25,8 @@ export default function () {
 
     return (
 
-        <div style={{ maxWidth: '1200px', margin: 'auto' }}>
+        <div style={{ maxWidth: '1200px', margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+
             <FilterForm applyFilter={applyFilter} />
             <Divider />
             <div style={{ textAlign: 'center', fontSize: 10, margin: 10 }}>- results: {articleCount} -</div>

@@ -12,12 +12,15 @@ export default function () {
     const endDate = "2023-11-12"
 
     const [articleList, setArticleList] = useState([]);
+    const [articleCount, setArticleCount] = useState('*')
 
     const applyFilter = async (startDate, endDate, poi, doi, minScore, maxScore) => {
         console.log("applyFilter:", startDate, endDate)
+        setArticleCount('*')
         setArticleList([])
-        const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&minScore=${minScore}&maxScore=${maxScore}`)
+        const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&poi=${poi}&doi=${doi}&minScore=${minScore}&maxScore=${maxScore}`)
         setArticleList(res.articles)
+        setArticleCount(res.count)
     }
 
     const handleChange = (value) => {
@@ -28,6 +31,7 @@ export default function () {
         const getArticles = async () => {
             const res = await fetchGet(`search?startDate=${startDate}&endDate=${endDate}&minScore=0&maxScore=10`)
             setArticleList(res.articles)
+            setArticleCount(res.count)
         }
         getArticles()
     }, [])
@@ -48,8 +52,8 @@ export default function () {
             </div>
             <Divider />
             <b>ARTICLE LIST</b><br />
-            <FilterForm applyFilter={applyFilter} />
             <br />
+            <div style={{ textAlign: 'center', fontSize: 10, margin: 10 }}>- results: {articleCount} -</div>
             <ArticleList1 articleList={articleList} />
         </div>
     )
