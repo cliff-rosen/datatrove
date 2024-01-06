@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Tag, Button, Row, Col, Collapse } from 'antd';
+import { Card, Tag, Button, Collapse } from 'antd';
 
 
 export default function ({ articleList }) {
@@ -14,7 +14,6 @@ export default function ({ articleList }) {
             console.error('Error copying text: ', err);
         });
     };
-
     return (
 
         <div style={{ maxWidth: '800px', margin: 'auto' }}>

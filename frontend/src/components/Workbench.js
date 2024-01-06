@@ -6,6 +6,14 @@ import { Divider } from 'antd';
 import { Card, Tag, Button, Row, Col, Collapse } from 'antd';
 import ArticleList2 from './ArticleList2';
 
+const filterObjDefault = {
+    startDate: '2023-11-01',
+    endDate: '2023-11-30',
+    poi: 'any',
+    doi: 'any',
+    minScore: 0,
+    maxScore: 0
+}
 
 export default function () {
     const [articleList, setArticleList] = useState([]);
@@ -14,7 +22,7 @@ export default function () {
     const [endDate, setEndDate] = useState('2023-11-30')
     const { Panel } = Collapse;
 
-    const applyFilter = async (startDate, endDate, poi, doi, minScore, maxScore) => {
+    const applyFilter = async ({ startDate, endDate, poi, doi, minScore, maxScore }) => {
         console.log("applyFilter:", startDate, endDate)
         setArticleCount('***')
         setArticleList([])
@@ -25,7 +33,7 @@ export default function () {
 
     return (
 
-        <div style={{ maxWidth: '1200px', margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <div style={{ margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
 
             <FilterForm applyFilter={applyFilter} />
             <Divider />

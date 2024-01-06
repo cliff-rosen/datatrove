@@ -1,15 +1,25 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, DatePicker, Button, Radio, Slider } from 'antd';
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
+const filterObjDefault = {
+    startDate: '2023-11-01',
+    endDate: '2023-11-30',
+    poi: 'any',
+    doi: 'any',
+    minScore: 0,
+    maxScore: 0
+}
+const dateFormat = 'YYYY/MM/DD';
+const defaultStartDate = moment('2023/11/01', dateFormat)
+const defaultEndDate = moment('2023/11/30', dateFormat)
+
 
 export default function ({ applyFilter }) {
+    const [filterObj, setFilterObj] = useState(filterObjDefault)
     const [form] = Form.useForm();
-    const dateFormat = 'YYYY/MM/DD';
-    const defaultStartDate = moment('2023/11/01', dateFormat)
-    const defaultEndDate = moment('2023/11/30', dateFormat)
 
     const formContainerStyle = {
         display: 'flex',
@@ -30,7 +40,7 @@ export default function ({ applyFilter }) {
             minScore = scores[0]
             maxScore = scores[1]
         }
-        applyFilter(startDate, endDate, values.poi, values.doi, minScore, maxScore);
+        applyFilter({ startDate, endDate, poi: values.poi, doi: values.doi, minScore, maxScore });
 
     };
 
