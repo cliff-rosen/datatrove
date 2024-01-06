@@ -16,7 +16,7 @@ export default function ({ articleList }) {
     };
     return (
 
-        <div style={{ maxWidth: '800px', margin: 'auto' }}>
+        <div>
             {articleList.map(article => (
                 <Card
                     key={article.pmid}

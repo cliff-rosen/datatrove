@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Tag, Button, Row, Col, Collapse } from 'antd';
 
-
 export default function ({ articleList }) {
     console.log(articleList)
     const { Panel } = Collapse;
@@ -17,7 +16,7 @@ export default function ({ articleList }) {
 
     return (
 
-        <div style={{ maxWidth: '800px', margin: 'auto' }}>
+        <div>
             {articleList.map(article => (
                 <Card
                     key={article.pmid}

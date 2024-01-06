@@ -2,9 +2,22 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import FilterForm from "./FilterForm";
 import { fetchGet, fetchPost } from "../utils/APIUtils";
-import { Divider } from 'antd';
-import { Card, Tag, Button, Row, Col, Collapse } from 'antd';
+import { Divider, Layout } from 'antd';
+import { CardLayout, Collapse } from 'antd';
 import ArticleList2 from './ArticleList2';
+
+const { Header, Content, Sider } = Layout;
+
+const contentStyle = {
+    padding: '0 20',
+    backgroundColor: '#fff',
+};
+
+const siderStyle = {
+    padding: '10px 10px',
+    backgroundColor: '#eee',
+    height: '500px'
+};
 
 const filterObjDefault = {
     startDate: '2023-11-01',
@@ -31,14 +44,17 @@ export default function () {
         setArticleCount(res.count)
     }
 
+    const divStyle = { margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }
+
     return (
-
-        <div style={{ margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-
-            <FilterForm applyFilter={applyFilter} />
-            <Divider />
-            <div style={{ textAlign: 'center', fontSize: 10, margin: 10 }}>- results: {articleCount} -</div>
-            <ArticleList2 articleList={articleList} />
-        </div>
+        <Layout>
+            <Sider style={siderStyle}>
+                <FilterForm applyFilter={applyFilter} />
+            </Sider>
+            <Content style={contentStyle}>
+                <div style={{ textAlign: 'center' }}>- results: {articleCount} -</div>
+                <ArticleList2 articleList={articleList} />
+            </Content>
+        </Layout>
     )
 }

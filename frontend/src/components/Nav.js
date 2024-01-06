@@ -18,11 +18,10 @@ const Nav = () => {
     console.log("Nav render");
     const navigate = useNavigate();
     const location = useLocation();
-    const [current, setCurrent] = useState('mail');
+    console.log(location)
 
     const onClick = (e) => {
         console.log('click ', e);
-        setCurrent(e.key);
         navigate(`/${e.key}`)
       };
 
@@ -55,7 +54,7 @@ const Nav = () => {
             </div>
 
             <div style={{ flexGrow: 0, fontSize: "1em" }}>
-            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+            <Menu onClick={onClick} selectedKeys={[location.pathname.substring(1)]} mode="horizontal" items={items} />
             </div>
         </Header>
     );

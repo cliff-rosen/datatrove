@@ -5,10 +5,18 @@ import Newsletter from "./components/Newsletter";
 import Workbench from "./components/Workbench";
 import ArticleList1 from "./components/ArticleList1";
 import FilterForm from "./components/FilterForm";
-import { Divider } from 'antd';
-import Container from "@mui/material/Container";
+import { Layout, Divider } from 'antd';
 import './App.css';
 
+const { Header, Footer, Sider, Content } = Layout;
+
+const layoutStyle = {
+};
+
+const contentStyle = {
+  padding: '0 48px',
+  backgroundColor: '#fff',
+};
 
 function App() {
 
@@ -16,14 +24,17 @@ function App() {
   // const sessionManager = useSessionManager();
 
   return (
-    <div>
-      <Nav style={{ "border": 1 }} />
-      <Routes>
-        <Route path="/" element={<Newsletter />} />
-        <Route path="/newsletter" element={<Newsletter />} />
-        <Route path="/workbench" element={<Workbench />} />
-      </Routes>
-    </div>
+    <Layout style={layoutStyle}>
+      <Nav />
+      <Content style={contentStyle} >
+        <Divider />
+        <Routes>
+          <Route path="/" element={<Newsletter />} />
+          <Route path="/newsletter" element={<Newsletter />} />
+          <Route path="/workbench" element={<Workbench />} />
+        </Routes>
+      </Content>
+    </Layout>
   );
 }
 export default App;
