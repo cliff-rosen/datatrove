@@ -10,8 +10,12 @@ import './App.css';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const layoutStyle = {
-};
+const layoutStyle =  {
+  maxWidth: '1000px',
+  margin: '0 auto',
+  padding: '0px',
+  backgroundColor: '#fff',
+}
 
 const contentStyle = {
   padding: '0 48px',

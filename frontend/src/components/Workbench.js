@@ -14,9 +14,8 @@ const contentStyle = {
 };
 
 const siderStyle = {
-    padding: '10px 10px',
-    backgroundColor: '#eee',
-    height: '500px'
+    padding: '20px',
+    backgroundColor: '#fff'
 };
 
 const filterObjDefault = {
@@ -44,12 +43,17 @@ export default function () {
         setArticleCount(res.count)
     }
 
+    const resetArticleList = () => {
+        setArticleList([])
+        setArticleCount(0)
+    }
+
     const divStyle = { margin: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }
 
     return (
         <Layout>
-            <Sider style={siderStyle}>
-                <FilterForm applyFilter={applyFilter} />
+            <Sider style={siderStyle} width={250}> 
+                <FilterForm applyFilter={applyFilter} resetArticleList={resetArticleList}/>
             </Sider>
             <Content style={contentStyle}>
                 <div style={{ textAlign: 'center' }}>- results: {articleCount} -</div>

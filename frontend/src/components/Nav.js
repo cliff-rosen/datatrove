@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { Layout, Space, Typography, Menu, MenuProps } from 'antd';
-//import 'antd/dist/antd.css'; // Import Ant Design CSS
 
 const { Header } = Layout;
 const items = [

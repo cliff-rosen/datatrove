@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Form, Space, DatePicker, Button, Radio, Slider } from 'antd';
 import moment from 'moment';
 import dayjs from 'dayjs';
@@ -14,7 +14,7 @@ const filterObjDefault = {
     poi: 'any',
     doi: 'any',
     minScore: 0,
-    maxScore: 0
+    maxScore: 10
 }
 
 const dateFormat = 'YYYY/MM/DD';
@@ -22,15 +22,17 @@ const defaultStartDate = '2023/11/01'
 const defaultEndDate = '2023/11/30'
 
 
-export default function ({ applyFilter }) {
+export default function ({ applyFilter, resetArticleList }) {
     const [filterObj, setFilterObj] = useState(filterObjDefault)
+    const formRef = useRef(null); // Create a ref for the form
     const [form] = Form.useForm();
 
-    const formContainerStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
+    const clearForm = () => {
+        formRef.current.resetFields()
+        resetArticleList()
+        // formRef.current.setFieldsValue({
+        //     dates: [dayjs(), dayjs()] // Sets both start and end dates to today
+        // });
     };
 
     const onFinish = (values) => {
@@ -52,20 +54,24 @@ export default function ({ applyFilter }) {
 
     return (
         <Form form={form}
+            ref={formRef}
             onFinish={onFinish}
             layout='vertical'
             initialValues={{
-                dates: [dayjs(defaultStartDate, dateFormat), dayjs(defaultEndDate, dateFormat)]
+                dates: [dayjs(defaultStartDate, dateFormat), dayjs(defaultEndDate, dateFormat)],
+                scoreRange: [0, 10]
             }}
         >
 
             <Form.Item
+                ref={formRef} 
                 name="dates"
-                label="Start and End Date"
+                className="bold-label"
+                label="DATES"
                 rules={[
                     {
                         type: 'array',
-                        required: true,
+                        required: false,
                         message: 'Please select start and end date!'
                     }
                 ]}
@@ -75,7 +81,8 @@ export default function ({ applyFilter }) {
 
             <Form.Item
                 name="poi"
-                label="PoI"
+                className="bold-label"                
+                label="POI"
             >
                 <Radio.Group defaultValue='any'>
                     <Space direction='vertical'>
@@ -88,7 +95,8 @@ export default function ({ applyFilter }) {
 
             <Form.Item
                 name="doi"
-                label="DoI"
+                className="bold-label"                
+                label="DOI"
             >
                 <Radio.Group defaultValue='any'>
                     <Space direction='vertical'>
@@ -98,19 +106,28 @@ export default function ({ applyFilter }) {
                     </Space>
                 </Radio.Group>
             </Form.Item>
+
             <Form.Item
                 name="scoreRange"
-                label="Score Range"
+                className="bold-label"
+                label="SCORE RANGE"
                 style={{ flex: 5, marginRight: 50 }}
             >
-                <Slider range min={0} max={10} defaultValue={[0, 10]} />
+                <Slider range min={0} max={10} />
             </Form.Item>
 
             <Form.Item>
                 <Button htmlType="submit">
                     Submit
                 </Button>
+                <Button
+                    style={{ marginLeft: '10px' }}
+                    onClick={clearForm}
+                >
+                    Clear
+                </Button>
             </Form.Item>
+
         </Form>
     );
 };
