@@ -2,8 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import FilterForm from "./FilterForm";
 import { fetchGet, fetchPost } from "../utils/APIUtils";
-import { Divider, Layout } from 'antd';
-import { CardLayout, Collapse } from 'antd';
+import { Layout, Collapse, Typography } from 'antd';
 import ArticleList2 from './ArticleList2';
 
 const { Header, Content, Sider } = Layout;
